@@ -1,0 +1,14 @@
+#DirectoryIndex app.php
+Options +FollowSymLinks
+RewriteEngine On
+
+RewriteBase /log210/
+
+# If the requested filename exists, simply serve it.
+# We only want to let Apache serve files and not directories.
+RewriteCond %{REQUEST_FILENAME} -f
+RewriteRule .? - [L]
+
+RewriteCond %{SCRIPT_FILENAME} !-f
+RewriteCond %{SCRIPT_FILENAME} !-d
+RewriteRule (.*) index.php?request=$1 [QSA,L]
