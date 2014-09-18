@@ -1,8 +1,4 @@
 It works !<br/>
-<?php
-echo $test;
-?>
-<br/>
-<?php
-echo $value;
-?>
+Test : <?php echo $test; ?><br/>
+Value : <?php echo $value; ?><br/>
+Name : <?php echo $name; ?><br/>
