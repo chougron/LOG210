@@ -15,7 +15,7 @@ class Kernel {
     
     private static function _autoload(){
         //Load the components
-        $components = array('Controller','Database','Model','Router','View', 'Session');
+        $components = array('Controller','Database','Model','Router','View', 'Session', 'Form');
         foreach($components as $component){
             $path = ROOT . '/app/component/' . $component . '.php';
             require_once $path;

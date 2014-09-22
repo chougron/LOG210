@@ -7,6 +7,6 @@ use App\Component\View;
 
 class ErrorController extends Controller{
     public function error404(){
-        View::render("error/error404.php");
+        return View::render("error/error404.php");
     }
 }
