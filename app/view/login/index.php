@@ -4,7 +4,10 @@
     <input type="email" placeholder="E-mail" name="mail" required><br/>
     <input type="password" placeholder="Mot de passe" name="password" required><br/>
     <input type="submit" value="Valider" name="login_form">
-</form>
+</form><br />
+
+<a href="/log210/register">Creer un compte</a>
+
 
 <?php if(isset($error)):?>
     Erreur : <?php echo $error; ?>
