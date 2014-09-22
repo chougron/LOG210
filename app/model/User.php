@@ -1,11 +1,20 @@
 <?php
-class User
+
+namespace App\Model;
+
+use App\Component\Model;
+
+class User extends Model
 {
+    private $_mail;
+    private $_password;
+    private $_firstName;
     private $_name;
     private $_adress;
-    private $_mail;
     private $_phoneNumber;
+    private $_birthday;
 
+<<<<<<< HEAD
     public __construct()
     {
     }    
@@ -14,22 +23,48 @@ class User
     {
         
     }
+    public function openSession($name)
+    {
+
+    }
+    public closeSession($session)
+    {
+
+    }
 
 
     /******************************
+=======
+        /******************************
+>>>>>>> 60547bb5c139e3270c309460ff8e7048d492925a
           GETTERS AND SETTERS
     *******************************/
     public function getName() {
         return $this->_name;
     }
+    
     public function getAdress() {
         return $this->_adress;
     }
+    
     public function getMail() {
         return $this->_mail;
     }
+    
     public function getPhoneNumber() {
         return $this->_phoneNumber;
+    }
+    
+    public function getPassword() {
+        return $this->_password;
+    }
+
+    public function getFirstName() {
+        return $this->_firstName;
+    }
+    
+    public function getBirthday() {
+        return $this->_birthday;
     }
 
     public function setName($name) {
@@ -40,6 +75,7 @@ class User
             $name = $this->_name;
         }
     }
+    
     public function setAdress($adress) {
         if (!isset($adress)) {
             trigger_error('The adress must have a value', E_USER_WARNING);
@@ -48,6 +84,7 @@ class User
             $this->_adress = $adress;
         }
     }
+    
     public function setMail($mail) {
         if (!isset($mail)) {
             trigger_error('The mail must have a value', E_USER_WARNING);
@@ -55,6 +92,8 @@ class User
         else {
             $this->_mail = $mail;
         }
+    }
+    
     public function setPhoneNumber($phoneNumber) {
         if (!isset($phoneNumber)) {
             trigger_error('The phone number must have a value', E_USER_WARNING);
@@ -62,6 +101,22 @@ class User
         else {
             $this->_phoneNumber = $phoneNumber;
         }
+    }
+
+    public function setPassword($password) {
+        $this->_password = $this->encryptPassword($password);
+    }
+
+    public function setFirstName($firstName) {
+        $this->_firstName = $firstName;
+    }
+
+    public function setBirthday($birthday) {
+        $this->_birthday = $birthday;
+    }
+
+    public static function encryptPassword($password){
+        return crypt($password);
     }
 }
 ?>

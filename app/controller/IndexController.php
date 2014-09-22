@@ -18,6 +18,6 @@ class IndexController extends Controller{
         
         $name = Session::get('name');
         
-        View::render("index/index.php", array('test'=>$test, 'value'=>$value, 'name'=>$name));
+        return View::render("index/index.php", array('test'=>$test, 'value'=>$value, 'name'=>$name));
     }
 }
