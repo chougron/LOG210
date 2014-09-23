@@ -17,16 +17,15 @@ class LoginController extends Controller{
         if(Form::exists('login_form')){
             
             //Check if User exists
-            
+            $user = User::getBy('mail', Form::get('mail'));
             
             //Confirm if PW matches
-
+            if($user && $user->getPassword() == User::encryptPassword(Form::get('password'))){
+                return View::render("login/complete.php", array('user'=>$user));
+            }
             
-            $user = new User();
-            $user->setMail("email@tempo.ca");
-            $user->save();
-            
-            return View::render("login/complete.php", array('user'=>$user));
+            $error = "Vos informations de connexion sont incorrects. Merci de réessayer.";
+            return View::render("login/index.php", array('error'=>$error));
         }
         
         return View::render("login/index.php");

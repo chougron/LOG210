@@ -20,6 +20,8 @@ class Model {
      * @return \App\Component\Model;
      */
     public static function getBy($var,$value){
+        $className = get_called_class();
+        $model = new $className;
         //TODO: Waiting for Cedric
         return null;
     }

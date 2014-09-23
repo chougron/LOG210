@@ -6,7 +6,7 @@
     <input type="submit" value="Valider" name="login_form">
 </form><br />
 
-<a href="/log210/register">Creer un compte</a>
+<a href="register">Créer un compte</a>
 
 
 <?php if(isset($error)):?>
