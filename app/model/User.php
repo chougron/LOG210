@@ -14,9 +14,7 @@ class User extends Model
     protected $_phoneNumber;
     protected $_birthday;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-    public __construct()
+    public function __construct()
     {
     }    
 
@@ -28,19 +26,13 @@ class User extends Model
     {
 
     }
-    public closeSession($session)
+    public function closeSession($session)
     {
 
     }
 
 
     /******************************
-=======
-        /******************************
->>>>>>> 60547bb5c139e3270c309460ff8e7048d492925a
-=======
-        /******************************
->>>>>>> 60547bb5c139e3270c309460ff8e7048d492925a
           GETTERS AND SETTERS
     *******************************/
     public function getName() {
