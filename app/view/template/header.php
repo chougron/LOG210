@@ -7,3 +7,6 @@
         <link rel="stylesheet" type="text/css" href="css/main.css">
     </head>
     <body>
+        <div id="content">
+            <a href="login">Connexion</a> - <a href="register">Inscription</a>
+            <br/>

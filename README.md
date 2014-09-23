@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-LOG210
-======
 =======
 LOG 210
 =======
@@ -14,6 +11,9 @@ fonctionnel sur votre machine. (LAMP, WAMP, ou MAMP)
 Il faut également vérifier que le module mod_rewrite est activé. S'il ne l'est
 pas, un truc de ce genre là pourra le faire :
 http://stackoverflow.com/questions/869092/how-to-enable-mod-rewrite-for-apache-2-2
+
+**Attention !** Il faut également maintenant l'extension mongodb pour PHP.
+Pensez à l'installer.
 
 Puis, il faut créer un alias pour le site, afin de le rendre disponible sous une
 certaine adresse locale.
@@ -92,10 +92,5 @@ tableau associatif des variables que l'on veut transmettre à la vue. (ex:
 array('test'=>'valeur') donnera une variable qui s'appelle test et dont la
 valeur est 'valeur')
 
-J'ai mis un exemple dans le controlleur index, faisant appel au model Test, et à
-la vue index.php. Vous pouvez vous en inspirer pour faire vos pages.
-
-
 Si vous avez des questions, ou si vous voyez que des choses ne marchent pas,
 n'hésitez pas à me demander.
->>>>>>> 09ea62f8521d341fbf18f362d19b38d50b451347

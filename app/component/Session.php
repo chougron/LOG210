@@ -7,7 +7,7 @@ session_start();
 
 class Session {
     
-    private static $user;
+    private static $user = null;
     
     public static function checkSessionUser(){
         if(isset($_SESSION['user'])){
@@ -16,13 +16,10 @@ class Session {
     }
     
     public static function getUser(){
-        //TODO: Return a real User object
         return self::$user;
     }
     
     public static function connect($user){
-        //TODO: Check if the user exists
-        //TODO: Store a real User object
         self::$user = $user;
         $_SESSION['user'] = $user;
     }
