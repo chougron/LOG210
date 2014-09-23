@@ -29,6 +29,6 @@ class LoginController extends Controller{
             return View::render("login/index.php", array('error'=>$error));
         }
         
-        return View::render("login/index.php");
+        return View::render("index/index.php");
     }
 }

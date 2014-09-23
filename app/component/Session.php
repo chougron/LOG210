@@ -15,6 +15,10 @@ class Session {
         }
     }
     
+    /**
+     * Return the current User
+     * @return \App\Model\User
+     */
     public static function getUser(){
         return self::$user;
     }
