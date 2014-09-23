@@ -17,10 +17,11 @@ class LoginController extends Controller{
         if(Form::exists('login_form')){
             
             //Check if User exists
-            $user = User::getBy('mail', Form::get('mail'));
+            $user = User::getOneBy(array('_mail' => Form::get('mail')));
             
             //Confirm if PW matches
             if($user && $user->getPassword() == User::encryptPassword(Form::get('password'))){
+                Session::connect($user);
                 return View::render("login/complete.php", array('user'=>$user));
             }
             

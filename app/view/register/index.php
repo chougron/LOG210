@@ -1,3 +1,4 @@
+<h1>Inscription</h1>
 <form action="register" method="post">
     <input type="email" placeholder="E-mail" name="mail" required><br/>
     <input type="password" placeholder="Mot de passe" name="password" required><br/>

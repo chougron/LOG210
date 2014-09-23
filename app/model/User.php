@@ -6,13 +6,13 @@ use App\Component\Model;
 
 class User extends Model
 {
-    private $_mail;
-    private $_password;
-    private $_firstName;
-    private $_name;
-    private $_adress;
-    private $_phoneNumber;
-    private $_birthday;
+    protected $_mail;
+    protected $_password;
+    protected $_firstName;
+    protected $_name;
+    protected $_adress;
+    protected $_phoneNumber;
+    protected $_birthday;
 
         /******************************
           GETTERS AND SETTERS
@@ -50,7 +50,7 @@ class User extends Model
             trigger_error('The name must have a value', E_USER_WARNING);
         }
         else {
-            $name = $this->_name;
+            $this->_name = $name;
         }
     }
     
@@ -93,8 +93,13 @@ class User extends Model
         $this->_birthday = $birthday;
     }
 
+    /**
+     * Encrypt a Password
+     * @param String $password
+     * @return String
+     */
     public static function encryptPassword($password){
-        return crypt($password);
+        return crypt($password, '$S*çresd)°°erd+&é"hJert34qsdfdsv3#œœSQER');
     }
 }
 ?>

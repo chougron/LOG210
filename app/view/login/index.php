@@ -6,9 +6,6 @@
     <input type="submit" value="Valider" name="login_form">
 </form><br />
 
-<a href="register">Créer un compte</a>
-
-
 <?php if(isset($error)):?>
     Erreur : <?php echo $error; ?>
 <?php endif; ?>

@@ -1,4 +1,2 @@
-It works !<br/>
-Test : <?php echo $test; ?><br/>
-Value : <?php echo $value; ?><br/>
-Name : <?php echo $name; ?><br/>
+<h1>Index</h1>
+Index du projet Log210
