@@ -31,4 +31,23 @@ class LoginController extends Controller{
         
         return View::render("index/index.php");
     }
+    
+    public function logout(){
+        Session::disconnect();
+        View::render("index/index.php");
+    }
+    
+    
+
+function curPageURL() {
+    $pageURL = "";
+ if ($_SERVER["SERVER_PORT"] != "80") {
+     
+  $pageURL .= $_SERVER["SERVER_NAME"].":".$_SERVER["SERVER_PORT"].$_SERVER["REQUEST_URI"];
+ } else {
+  $pageURL .= $_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"];
+ }
+ $pageURL = str_replace("logout","",str_replace("localhost/","" , $pageURL));
+ return $pageURL;
+}
 }

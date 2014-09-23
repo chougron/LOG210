@@ -24,18 +24,18 @@ use App\Component\Session;
               <span class="icon-bar"></span>
             </button>
 
-            <a class="navbar-brand" href="#">Project name</a>
+            <a class="navbar-brand" href="/log210">Laboratoire</a>
           </div>
           <div class="collapse navbar-collapse">
-              <ul class="nav navbar-nav">
+              <!--<ul class="nav navbar-nav">
                 <li class="active"><a href="#">Home</a></li>
                 <li><a href="#about">About</a></li>
                 <li><a href="#contact">Contact</a></li>
-              </ul>
+              </ul>-->
             <?php if(Session::isConnected()): ?>
               <ul class="nav navbar-nav navbar-right">
                   <li><a href="profile/">( tempo )</a></li> <!-- <?php// echo Session::getUser()->getFirstName(); ?> -->
-                    <li><a href="disconnect/">Disconnect</a></li>
+                    <li><a href="login/logout/">Disconnect</a></li>
               </ul>  
             <?php else: ?>
               <form action="login" class="navbar-form navbar-right" method="post" role="form">
@@ -47,10 +47,12 @@ use App\Component\Session;
                   </div>
                   <button type="submit" name="login_form" class="btn btn-success">Login</button>
                 </form>
+                <div class="navbar-form navbar-right">
+                    <button action="register/" onclick="location.href='register';" class="btn btn-primary">Create</button>
+                </div>
             <?php endif; ?>
           </div><!--/.nav-collapse -->
         </div>
       </div>
             
       <div class="container">
-      

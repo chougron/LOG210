@@ -1,2 +1,3 @@
 Login terminée. (E-mail : <?php echo $user->getMail(); ?>)<br/>
-Vous etes presentement connecte.
+Vous êtes présentement connecté. Vous serrez redirigé dans 3 secondes.
+<?php header('Refresh: 3; URL='); ?>
