@@ -35,7 +35,7 @@ use App\Component\Session;
                     </ul>-->
 <?php if (Session::isConnected()): ?>
                         <ul class="nav navbar-nav navbar-right">
-                            <li><a href="profile/">Profile</a></li> <!-- <?php // echo Session::getUser()->getFirstName();  ?> -->
+                            <li><a href="profile">Profile</a></li> <!-- <?php // echo Session::getUser()->getFirstName();  ?> -->
                             <li><a href="login/logout/">Disconnect</a></li>
                         </ul>  
 <?php else: ?>
