@@ -5,8 +5,8 @@
 <h1>Profile</h1>
 <form action="profile" method="post">
     <input type="email" placeholder="E-mail" name="mail" value="<?php echo $user->getMail(); ?>" disabled required><br/>
-    <input type="password" placeholder="Mot de passe" name="password" required><br/>
-    <input type="password" placeholder="Vérification" name="password_check" required><br/>
+    <input type="password" placeholder="Mot de passe" name="password" ><br/>
+    <input type="password" placeholder="Vérification" name="password_check" ><br/>
     <input type="text" placeholder="Prénom" name="firstName" value="<?php echo $user->getFirstName(); ?>" required><br/>
     <input type="text" placeholder="Nom" name="name" value="<?php echo $user->getName(); ?>" required><br/>
     <input type="text" placeholder="Adresse" name="address" value="<?php echo $user->getAdress(); ?>" required><br/>

@@ -21,25 +21,22 @@ class ProfileController extends Controller{
                 $error = "Veuillez remplir tous les champs";
                 return View::render("register/index.php", array('error' => $error));
             }
-            
-            //We check if the mail address is not already taken
-//            if(User::getOneBy(array('_mail' => Form::get('mail')))){
-//                $error = "Cette adresse e-mail est déjà associée à un compte. Veuillez en choisir une autre.";
-//                return View::render("register/index.php", array('error' => $error));
-//            }
-            
-            //We check if the password and the check are the same
-            if(Form::get('password') != Form::get('password_check')){
-                $error = "Les mots de passe ne correspondent pas.";
-                return View::render("register/index.php", array('error' => $error));
-            }
-            
-            //We create a new User, and associate the values
+                        
             $user = Session::getUser();
+            //We check if the password and the check are the same
+            if(Form::exists('password')){
+                if(Form::get('password') != Form::get('password_check')){
+                    $error = "Les mots de passe ne correspondent pas.";
+                    return View::render("register/index.php", array('error' => $error));
+                }else{
+                    $user->setPassword(Form::get('password'));
+                }
+            }         
+            //associate the values
+            
             $user->setAdress(Form::get('address'));
             $user->setFirstName(Form::get('firstName'));
             $user->setName(Form::get('name'));
-            $user->setPassword(Form::get('password'));
             $user->setPhoneNumber(Form::get('phoneNumber'));
             $user->setBirthday(Form::get('birthday'));
             //We save this User in the DB
