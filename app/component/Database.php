@@ -57,7 +57,7 @@ class Database {
     public static function save($table, $object)
     {
         $collection = self::$database->$table;
-        $collection->insert($object->toArray());
+        $collection->save($object->toArray());
     }
     
     public static function delete($table, $object)
