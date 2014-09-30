@@ -2,16 +2,13 @@
 
 namespace App\Component;
 
-session_start();
-\App\Component\Session::checkSessionUser();
-
 class Session {
     
     private static $user = null;
     
     public static function checkSessionUser(){
         if(isset($_SESSION['user'])){
-            self::$user = $_SESSION['user'];
+            self::$user = unserialize($_SESSION['user']);
         }
     }
     
@@ -25,7 +22,7 @@ class Session {
     
     public static function connect($user){
         self::$user = $user;
-        $_SESSION['user'] = $user;
+        $_SESSION['user'] = serialize($user);
     }
     
     public static function disconnect(){
@@ -38,10 +35,10 @@ class Session {
     }
     
     public static function set($name, $value){
-        $_SESSION['vars'][$name] = $value;
+        $_SESSION['vars'][$name] = serialize($value);
     }
     
     public static function get($name){
-        return isset($_SESSION['vars'][$name]) ? $_SESSION['vars'][$name] : null;
+        return isset($_SESSION['vars'][$name]) ? unserialize($_SESSION['vars'][$name]) : null;
     }
 }

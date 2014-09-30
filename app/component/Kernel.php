@@ -7,6 +7,7 @@ use App\Component\Router;
 class Kernel {
     public static function run(){
         self::_autoload();
+        self::_boot();
         
         $request = isset($_GET['request']) ? $_GET['request'] : '';
         
@@ -38,5 +39,10 @@ class Kernel {
                 require_once $path;
             }
         }
+    }
+    
+    private static function _boot(){
+        session_start();
+        \App\Component\Session::checkSessionUser();
     }
 }
