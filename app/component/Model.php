@@ -25,7 +25,7 @@ class Model {
      */
     public function save()
     {
-        Database::insert(self::getCollectionName(), $this);
+        Database::save(self::getCollectionName(), $this);
         return true;
     }
     

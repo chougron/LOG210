@@ -54,15 +54,10 @@ class Database {
      * @param String $table
      * @param \App\Component\Model $object
      */
-    public static function insert($table, $object)
+    public static function save($table, $object)
     {
         $collection = self::$database->$table;
         $collection->insert($object->toArray());
-    }
-    
-    public static function update($table, $object)
-    {
-        //TODO: Later
     }
     
     public static function delete($table, $object)
