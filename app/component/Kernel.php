@@ -22,13 +22,10 @@ class Kernel {
             require_once $path;
         }
         //Load the models
-        $models_path = ROOT . '/app/model';
-        $models = scandir($models_path);
+        $models = array('User', 'Client', 'Entrepreneur', 'Restaurant', 'Restaurateur', 'Test');
         foreach($models as $model){
-            $path = $models_path . '/' . $model;
-            if(!is_dir($path)){
-                require_once $path;
-            }
+            $path = ROOT . '/app/model/' . $model . '.php';
+            require_once $path;
         }
         //Load the controllers
         $controllers_path = ROOT . '/app/controller';

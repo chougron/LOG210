@@ -4,10 +4,8 @@ namespace App\Controller;
 
 use App\Component\Controller;
 use App\Component\View;
-use App\Component\Session;
 use App\Component\Form;
-use App\Model\Test;
-use App\Model\User;
+use App\Model\Client;
 
 class RegisterController extends Controller{
     
@@ -23,7 +21,7 @@ class RegisterController extends Controller{
             }
             
             //We check if the mail address is not already taken
-            if(User::getOneBy(array('_mail' => Form::get('mail')))){
+            if(Client::getOneBy(array('_mail' => Form::get('mail')))){
                 $error = "Cette adresse e-mail est déjà associée à un compte. Veuillez en choisir une autre.";
                 return View::render("register/index.php", array('error' => $error));
             }
@@ -35,7 +33,7 @@ class RegisterController extends Controller{
             }
             
             //We create a new User, and associate the values
-            $user = new User();
+            $user = new Client();
             $user->setAdress(Form::get('address'));
             $user->setFirstName(Form::get('firstName'));
             $user->setMail(Form::get('mail'));

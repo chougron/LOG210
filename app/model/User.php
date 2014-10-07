@@ -13,54 +13,83 @@ class User extends Model
     protected $_adress;
     protected $_phoneNumber;
     protected $_birthday;
+    
+    /**
+     * The type of user
+     * @var String
+     */
+    protected $_type;
 
-    public function __construct()
+    public function __construct($type)
     {
-    }    
-
-    public function connect($name, $hashedPassword)
-    {
-        
+        $this->_type = $type;
     }
-    public function openSession($name)
-    {
-
-    }
-    public function closeSession($session)
-    {
-
-    }
-
 
     /******************************
           GETTERS AND SETTERS
     *******************************/
+    /**
+     * Get the Name of the User
+     * @return String
+     */
     public function getName() {
         return $this->_name;
     }
     
+    /**
+     * Get the Adress of the User
+     * @return String
+     */
     public function getAdress() {
         return $this->_adress;
     }
     
+    /**
+     * Get the Mail of the USer
+     * @return String
+     */
     public function getMail() {
         return $this->_mail;
     }
     
+    /**
+     * Get the Phone Number of the User
+     * @return String
+     */
     public function getPhoneNumber() {
         return $this->_phoneNumber;
     }
     
+    /**
+     * Get the Hashed password of the User
+     * @return String
+     */
     public function getPassword() {
         return $this->_password;
     }
 
+    /**
+     * Get the First Name of the User
+     * @return String
+     */
     public function getFirstName() {
         return $this->_firstName;
     }
     
+    /**
+     * Get the Birthday of the User
+     * @return String
+     */
     public function getBirthday() {
         return $this->_birthday;
+    }
+    
+    /**
+     * Get the Type of the User
+     * @return String
+     */
+    public function getType() {
+        return $this->_type;
     }
 
     public function setName($name) {

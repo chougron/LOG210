@@ -6,8 +6,7 @@ use App\Component\Controller;
 use App\Component\View;
 use App\Component\Session;
 use App\Component\Form;
-use App\Model\Test;
-use App\Model\User;
+use App\Model\Client;
 
 class LoginController extends Controller{
     
@@ -17,10 +16,10 @@ class LoginController extends Controller{
         if(Form::exists('login_form')){
             
             //Check if User exists
-            $user = User::getOneBy(array('_mail' => Form::get('mail')));
+            $user = Client::getOneBy(array('_mail' => Form::get('mail')));
             
             //Confirm if PW matches
-            if($user && $user->getPassword() == User::encryptPassword(Form::get('password'))){
+            if($user && $user->getPassword() == Client::encryptPassword(Form::get('password'))){
                 Session::connect($user);
                 return View::render("login/complete.php", array('user'=>$user));
             }

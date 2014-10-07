@@ -11,7 +11,7 @@ use App\Component\Session;
         <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
         <link rel="stylesheet" type="text/css" href="css/main.css">
 
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        <script src="js/jquery.min.js"></script>
         <script src="bootstrap/js/bootstrap.min.js"></script>
     </head>
     <body>            
@@ -33,7 +33,7 @@ use App\Component\Session;
                       <li><a href="#about">About</a></li>
                       <li><a href="#contact">Contact</a></li>
                     </ul>-->
-<?php if (Session::isConnected()): ?>
+<?php if (Session::isConnected() && Session::getUser()->getType() == USER_CLIENT): ?>
                         <ul class="nav navbar-nav navbar-right">
                             <li><a href="profile/">Profile</a></li> <!-- <?php // echo Session::getUser()->getFirstName();  ?> -->
                             <li><a href="login/logout/">Disconnect</a></li>
