@@ -10,4 +10,48 @@ class Restaurateur extends User
     {
         parent::__construct(USER_RESTAURATEUR);
     }
+    
+    protected $_restaurants = array();
+    
+    /**
+     * Add a Restaurant to the list
+     * @param \App\Model\Restaurant $restaurant
+     */
+    public function addRestaurant(Restaurant $restaurant)
+    {
+        $id = $restaurant->getId();
+        //If the object doesn't have an id, return
+        if(is_null($id)){
+            return;
+        }
+        //If the Restaurant is already in the array, return
+        foreach ($this->_restaurants as $restaurant){
+            if($id->__toString() == $restaurant->__toString()){
+                return;
+            }
+        }
+        
+        $this->_restaurants[] = $id;
+    }
+    
+    /**
+     * Return the restaurants associated to the Restaurateur
+     * @return Array
+     */
+    public function getRestaurants()
+    {
+        $restaurants = Restaurant::getBy(array('_id' => array('$in' => $this->_restaurants)));
+        return $restaurants;
+    }
+    
+    /**
+     * Save a Restaurateur
+     */
+    public function save() {
+        foreach($this->getRestaurants() as $restaurant){
+            $restaurant->setRestaurateur($this);
+            $restaurant->save();
+        }
+        parent::save();
+    }
 }

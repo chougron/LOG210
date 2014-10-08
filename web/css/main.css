@@ -1,12 +1,15 @@
 html{
     margin: 0;
     padding: 0;
+    position: relative;
+    min-height: 100%;
 }
 
 body{
     margin: 0;
     padding: 0;
     background-image: url('background.jpg');
+    margin-bottom: 60px;
 }
 
 #content{
@@ -14,4 +17,15 @@ body{
     text-align: center;
     margin: auto;
     background-color: rgba(0,0,0,0.3);
+}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    /* Set the fixed height of the footer here */
+    height: 60px;
+    background-color: #222;
+    color: #333;
+    padding-top: 10px;
 }

@@ -6,8 +6,16 @@ use App\Component\Database;
 
 class Model {
     
+    /**
+     * The ID of the object in the DB
+     * @var String
+     */
     protected $_id;
     
+    /**
+     * Return the ID of the object
+     * @return String
+     */
     public function getId() {
         return $this->_id;
     }
@@ -35,12 +43,21 @@ class Model {
      * @param mixed $value The value of the var
      * @return \App\Component\Model;
      */
-    public static function getBy($var,$value)
+    public static function getBy($array)
     {
-        $className = get_called_class();
-        $model = new $className;
-        //TODO: Waiting for Cedric
-        return null;
+        $objects = Database::getWhere(self::getCollectionName(), $array);
+        
+        $hydrated = array();
+        
+        foreach($objects as $object){
+            $className = get_called_class();
+            $model = new $className;
+            $model->hydrate($object);
+            
+            $hydrated[] = $model;
+        }
+        
+        return $hydrated;
     }
     
     /**

@@ -41,4 +41,21 @@ class Session {
     public static function get($name){
         return isset($_SESSION['vars'][$name]) ? unserialize($_SESSION['vars'][$name]) : null;
     }
+    
+    /**
+     * Add a message that will be displayed in next page
+     * @param String $title The title of the message
+     * @param String $type (success, info, warning, danger)
+     * @param String $message The message
+     */
+    public static function addFlashMessage($title, $type, $message){
+        $array = array('title'=>$title, 'type'=>$type, 'message'=>$message);
+        $_SESSION['flash'][] = $array;
+    }
+    
+    public static function getFlashMessages(){
+        $messages = isset($_SESSION['flash']) ? $_SESSION['flash'] : null;
+        $_SESSION['flash'] = array();
+        return $messages;
+    }
 }

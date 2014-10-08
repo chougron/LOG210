@@ -5,6 +5,9 @@ namespace App\Component;
 use App\Component\Router;
 
 class Kernel {
+    
+    public static $base_site = "http://localhost/log210";
+    
     public static function run(){
         self::_autoload();
         self::_boot();
@@ -16,7 +19,7 @@ class Kernel {
     
     private static function _autoload(){
         //Load the components
-        $components = array('Controller','Database','Model','Router','View', 'Session', 'Form');
+        $components = array('Controller','Database','Model','Router','View', 'Session', 'Form', 'Redirect', 'DatabaseSeeder');
         foreach($components as $component){
             $path = ROOT . '/app/component/' . $component . '.php';
             require_once $path;
@@ -36,6 +39,9 @@ class Kernel {
                 require_once $path;
             }
         }
+        //Seed the Database with values
+        $databaseSeeder = new DatabaseSeeder();
+        $databaseSeeder->seed();
     }
     
     private static function _boot(){

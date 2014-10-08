@@ -34,7 +34,7 @@ class Database {
      * Get one Object from the Database
      * @param String $table
      * @param mixed $array
-     * @return type
+     * @return mixed
      */
     public static function getOne($table, $array)
     {
@@ -44,9 +44,24 @@ class Database {
         return $object;
     }
     
+    /**
+     * Get an array of objects from the Database
+     * @param String $table
+     * @param mixed $array
+     * @return mixed
+     */
     public static function getWhere($table, $array)
     {
-        //TODO: Later
+        $collection = self::$database->$table;
+        $cursor = $collection->find($array);
+        
+        $objects = array();
+        
+        foreach($cursor as $object){
+            $objects[] = $object;
+        }
+        
+        return $objects;
     }
     
     /**

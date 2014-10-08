@@ -33,7 +33,7 @@ use App\Component\Session;
                       <li><a href="#about">About</a></li>
                       <li><a href="#contact">Contact</a></li>
                     </ul>-->
-<?php if (Session::isConnected() && Session::getUser()->getType() == USER_CLIENT): ?>
+<?php if (Session::isConnected()): ?>
                         <ul class="nav navbar-nav navbar-right">
                             <li><a href="profile">Profile</a></li> <!-- <?php // echo Session::getUser()->getFirstName();  ?> -->
                             <li><a href="login/logout/">Disconnect</a></li>
@@ -55,5 +55,14 @@ use App\Component\Session;
                 </div><!--/.nav-collapse -->
             </div>
         </div>
-
+        
         <div class="container">
+          <div class="jumbotron">
+        
+            <?php foreach(Session::getFlashMessages() as $message): ?>
+            <div class="alert alert-<?php echo $message['type']; ?> fade in" role="alert">
+                <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h3><?php echo $message['title']; ?></h3>
+                <?php echo $message['message']; ?>
+            </div>
+            <?php endforeach; ?>
