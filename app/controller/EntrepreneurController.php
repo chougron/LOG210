@@ -17,7 +17,7 @@ class EntrepreneurController extends Controller{
     {
         //If we are not connected as an entrepreneur, send to the login page
         if(!Session::isConnected() || Session::getUser()->getType() != USER_ENTREPRENEUR){
-            Redirect::to('entrepreneur/login');
+            Redirect::to('/entrepreneur/login');
         }
         
         return View::render("entrepreneur/index.php", array('user' => Session::getUser()));
@@ -48,7 +48,7 @@ class EntrepreneurController extends Controller{
     {
         //If we are not connected as an entrepreneur, send to the login page
         if(!Session::isConnected() || Session::getUser()->getType() != USER_ENTREPRENEUR){
-            Redirect::to('entrepreneur/login');
+            Redirect::to('/entrepreneur/login');
         }
         
         //We select all the Restaurants without restaurateur
@@ -58,18 +58,27 @@ class EntrepreneurController extends Controller{
             
             //We check if all the input are filled
             if(Form::checkEmpty(array('firstName','mail','name','password','password_check'))){
+                Session::addFlashMessage("Erreur :", 
+                        'error', 
+                        "Tous les champs ne sont pas remplis.");
                 $error = "Veuillez remplir tous les champs";
                 return View::render("entrepreneur/ajoutRestaurateur.php", array('error' => $error, 'restaurants' => $restaurants));
             }
             
             //We check if the mail address is not already taken
             if(Restaurateur::getOneBy(array('_mail' => Form::get('mail')))){
+                Session::addFlashMessage("Erreur :", 
+                        'error', 
+                        "Adresse e-mail non disponible.");
                 $error = "Cette adresse e-mail est déjà associée à un compte. Veuillez en choisir une autre.";
                 return View::render("entrepreneur/ajoutRestaurateur.php", array('error' => $error, 'restaurants' => $restaurants));
             }
             
             //We check if the password and the check are the same
             if(Form::get('password') != Form::get('password_check')){
+                Session::addFlashMessage("Erreur :", 
+                        'error', 
+                        "Les mots de passe ne correspondent pas.");
                 $error = "Les mots de passe ne correspondent pas.";
                 return View::render("entrepreneur/ajoutRestaurateur.php", array('error' => $error, 'restaurants' => $restaurants));
             }
@@ -113,5 +122,41 @@ class EntrepreneurController extends Controller{
         }
         
         return View::render("entrepreneur/ajoutRestaurateur.php", array('restaurants' => $restaurants));
+    }
+    
+    public function supprimeRestaurateur()
+    {
+        //If we are not connected as an entrepreneur, send to the login page
+        if(!Session::isConnected() || Session::getUser()->getType() != USER_ENTREPRENEUR){
+            Redirect::to('/entrepreneur/login');
+        }
+        
+        //We get all the restaurateurs
+        $restaurateurs = Restaurateur::getBy(array());
+        
+        return View::render("entrepreneur/supprimeRestaurateur.php", array('restaurateurs' => $restaurateurs));
+    }
+    
+    public function doSupprimeRestaurateur($id)
+    {
+        //If we are not connected as an entrepreneur, send to the login page
+        if(!Session::isConnected() || Session::getUser()->getType() != USER_ENTREPRENEUR){
+            Redirect::to('/entrepreneur/login');
+        }
+        
+        $restaurateur = Restaurateur::getOneBy(array('_id' => new \MongoId($id)));
+        if(!$restaurateur){
+            //If the restaurateur doesn't exist, we redirect to the list
+            Session::addFlashMessage("Suppression impossible :", 
+                    'error', 
+                    "Ce restaurateur n'existe pas.");
+            Redirect::to('/entrepreneur/supprimeRestaurateur');
+        }
+        //Then we delete the restaurateur
+        $restaurateur->delete();
+        Session::addFlashMessage("Restaurateur supprimé", 
+                'success', 
+                "Le restaurateur a été supprimé avec succès.");
+        Redirect::to('/entrepreneur/supprimeRestaurateur');
     }
 }

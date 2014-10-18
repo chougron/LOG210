@@ -33,12 +33,12 @@ use App\Component\Session;
                       <li><a href="#about">About</a></li>
                       <li><a href="#contact">Contact</a></li>
                     </ul>-->
-<?php if (Session::isConnected()): ?>
+                    <?php if (Session::isConnected()): ?>
                         <ul class="nav navbar-nav navbar-right">
-                            <li><a href="profile">Profile</a></li> <!-- <?php // echo Session::getUser()->getFirstName();  ?> -->
+                            <li><a href="profile">Profile</a></li> <!-- <?php // echo Session::getUser()->getFirstName();   ?> -->
                             <li><a href="login/logout/">Disconnect</a></li>
                         </ul>  
-<?php else: ?>
+                    <?php else: ?>
                         <form action="login" class="navbar-form navbar-right" method="post" role="form">
                             <div class="form-group">
                                 <input type="text" placeholder="Email" name="mail" class="form-control" required>
@@ -51,18 +51,20 @@ use App\Component\Session;
                         <div class="navbar-form navbar-right">
                             <button action="register/" onclick="location.href = 'register';" class="btn btn-primary">Create</button>
                         </div>
-<?php endif; ?>
+                    <?php endif; ?>
                 </div><!--/.nav-collapse -->
             </div>
         </div>
-        
+
         <div class="container">
-          <div class="jumbotron">
-        
-            <?php foreach(Session::getFlashMessages() as $message): ?>
-            <div class="alert alert-<?php echo $message['type']; ?> fade in" role="alert">
-                <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <h3><?php echo $message['title']; ?></h3>
-                <?php echo $message['message']; ?>
-            </div>
-            <?php endforeach; ?>
+            <div class="jumbotron">
+
+                <?php if ($messages = Session::getFlashMessages()): ?>
+                    <?php foreach ($messages as $message): ?>
+                        <div class="alert alert-<?php echo $message['type']; ?> fade in" role="alert">
+                            <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                            <h3><?php echo $message['title']; ?></h3>
+                            <?php echo $message['message']; ?>
+                        </div>
+                    <?php endforeach; ?>
+                <?php endif; ?>

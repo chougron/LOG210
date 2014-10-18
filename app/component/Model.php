@@ -38,6 +38,14 @@ class Model {
     }
     
     /**
+     * Delete a model in the DB
+     */
+    public function delete()
+    {
+        Database::delete(self::getCollectionName(), $this);
+    }
+    
+    /**
      * Return Models found in the db where the var has the value $value
      * @param String $var The var to compare
      * @param mixed $value The value of the var

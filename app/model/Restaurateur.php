@@ -54,4 +54,17 @@ class Restaurateur extends User
         }
         parent::save();
     }
+    
+    /**
+     * Delete a Restaurateur
+     */
+    public function delete() {
+        //We get all the restaurants of the Restaurateur, and remove the link
+        $restaurants = $this->getRestaurants();
+        foreach($restaurants as $restaurant){
+            $restaurant->removeRestaurateur();
+            $restaurant->save();
+        }
+        parent::delete();
+    }
 }

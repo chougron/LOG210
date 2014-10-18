@@ -65,7 +65,7 @@ class Database {
     }
     
     /**
-     * 
+     * Save an Object in the DB
      * @param String $table
      * @param \App\Component\Model $object
      */
@@ -75,9 +75,15 @@ class Database {
         $collection->save($object->toArray());
     }
     
+    /**
+     * Remove a given Object from the DB
+     * @param String $table
+     * @param \App\Component\Model $object
+     */
     public static function delete($table, $object)
     {
-        //TODO: Later
+        $collection = self::$database->$table;
+        $collection->remove($object->toArray());
     }
 }
 

@@ -56,4 +56,9 @@ class Restaurant extends Model
     {
         $this->restaurateur = $restaurateur->getId();
     }
+    
+    public function removeRestaurateur()
+    {
+        $this->restaurateur = NULL;
+    }
 }
