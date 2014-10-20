@@ -35,6 +35,26 @@ class Restaurateur extends User
     }
     
     /**
+     * Remove a Restaurant from the list
+     * @param \App\Model\Restaurant $restaurant
+     */
+    public function removeRestaurant(Restaurant $restaurant)
+    {
+        $id = $restaurant->getId();
+        //If the object doesn't have an id, return
+        if(is_null($id)){
+            return;
+        }
+       //We search the $id and remove it if we find it
+        foreach($this->_restaurants as $key => $restaurant){
+            if($id->__toString() == $restaurant->__toString()){
+                unset($this->_restaurants[$key]);
+                return;
+            }
+        }
+    }
+    
+    /**
      * Return the restaurants associated to the Restaurateur
      * @return Array
      */

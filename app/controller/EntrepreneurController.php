@@ -93,7 +93,6 @@ class EntrepreneurController extends Controller{
             $user->save();
             
             //We add the restaurants to the Restaurateur
-            $user = Restaurateur::getOneBy(array('_mail' => Form::get('mail')));
             $atLeastOneAdded = false;
             foreach(Form::get('restaurants') as $restaurantId){
                 if($restaurantId != ""){
@@ -158,5 +157,107 @@ class EntrepreneurController extends Controller{
                 'success', 
                 "Le restaurateur a été supprimé avec succès.");
         Redirect::to('/entrepreneur/supprimeRestaurateur');
+    }
+    
+    
+    public function ajoutRestaurant()
+    {
+        //If we are not connected as an entrepreneur, send to the login page
+        if(!Session::isConnected() || Session::getUser()->getType() != USER_ENTREPRENEUR){
+            Redirect::to('/entrepreneur/login');
+        }
+        
+        //We select all the Restaurants without restaurateur
+        $restaurateurs = Restaurateur::getBy(array());
+        
+        if(Form::exists('restaurant_add_form')){
+            
+            //We check if all the input are filled
+            if(Form::checkEmpty(array('name'))){
+                Session::addFlashMessage("Erreur :", 
+                        'error', 
+                        "Tous les champs ne sont pas remplis.");
+                $error = "Veuillez remplir tous les champs";
+                return View::render("entrepreneur/ajoutRestaurant.php", array('error' => $error, 'restaurateurs' => $restaurateurs));
+            }
+            
+            //We check if the mail address is not already taken
+            if(Restaurateur::getOneBy(array('name' => Form::get('name')))){
+                Session::addFlashMessage("Erreur :", 
+                        'error', 
+                        "Ce nom de restaurant est non disponible.");
+                $error = "Ce nom de restaurant existe déjà. Veuillez en choisir une autre.";
+                return View::render("entrepreneur/ajoutRestaurant.php", array('error' => $error, 'restaurateurs' => $restaurateurs));
+            }
+            
+            //We create a new Restaurant, and associate the values
+            $restaurant = new Restaurant();
+            $restaurant->setName(Form::get('name'));
+            //We save this Restaurant in the DB
+            $restaurant->save();
+            
+            //We add the Restaurateur to the Restaurant
+            $restaurateurAdded = false;
+            $restaurateurId = Form::get('restaurateur');
+            if($restaurateurId != ""){
+                $restaurateur = Restaurateur::getOneBy(array('_id' => new \MongoId($restaurateurId)));
+                //If the Restaurateur exist, we add the Restaurant to it
+                if($restaurateur){
+                    $restaurateur->addRestaurant($restaurant);
+                    $restaurateur->save();
+                    $restaurateurAdded = true;
+                }
+            }
+            
+            if($restaurateurAdded){
+                Session::addFlashMessage("Restaurant ajouté avec succès", 
+                        'success', 
+                        "Le restaurant " . $restaurant->getName() . " a été ajouté avec succès.");
+            } else {
+                Session::addFlashMessage("Restaurant ajouté sans restaurateur", 
+                        'warning', 
+                        "Le restaurant " . $restaurant->getName() . " a été ajouté sans restaurateur associé.");
+            }
+            
+            Redirect::to('/entrepreneur');
+        }
+        
+        return View::render("entrepreneur/ajoutRestaurant.php", array('restaurateurs' => $restaurateurs));
+    }
+    
+    public function supprimeRestaurant()
+    {
+        //If we are not connected as an entrepreneur, send to the login page
+        if(!Session::isConnected() || Session::getUser()->getType() != USER_ENTREPRENEUR){
+            Redirect::to('/entrepreneur/login');
+        }
+        
+        //We get all the restaurateurs
+        $restaurants = Restaurant::getBy(array());
+        
+        return View::render("entrepreneur/supprimeRestaurant.php", array('restaurants' => $restaurants));
+    }
+    
+    public function doSupprimeRestaurant($id)
+    {
+        //If we are not connected as an entrepreneur, send to the login page
+        if(!Session::isConnected() || Session::getUser()->getType() != USER_ENTREPRENEUR){
+            Redirect::to('/entrepreneur/login');
+        }
+        
+        $restaurant = Restaurant::getOneBy(array('_id' => new \MongoId($id)));
+        if(!$restaurant){
+            //If the restaurateur doesn't exist, we redirect to the list
+            Session::addFlashMessage("Suppression impossible :", 
+                    'error', 
+                    "Ce restaurant n'existe pas.");
+            Redirect::to('/entrepreneur/supprimeRestaurant');
+        }
+        //Then we delete the restaurateur
+        $restaurant->delete();
+        Session::addFlashMessage("Restaurant supprimé", 
+                'success', 
+                "Le restaurant a été supprimé avec succès.");
+        Redirect::to('/entrepreneur/supprimeRestaurant');
     }
 }

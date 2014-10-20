@@ -37,7 +37,7 @@ class Restaurant extends Model
     
     /**
      * Return the associated Restaurateur
-     * @return Restaurateur
+     * @return \App\Model\Restaurateur
      */
     public function getRestaurateur()
     {
@@ -57,8 +57,19 @@ class Restaurant extends Model
         $this->restaurateur = $restaurateur->getId();
     }
     
+    /**
+     * Remove the current Restaurateur of the Restaurant
+     */
     public function removeRestaurateur()
     {
         $this->restaurateur = NULL;
+    }
+    
+    public function delete() {
+        //We get all the restaurants of the Restaurateur, and remove the link
+        $restaurateur = $this->getRestaurateur();
+        $restaurateur->removeRestaurant($this);
+        $restaurateur->save();
+        parent::delete();
     }
 }
