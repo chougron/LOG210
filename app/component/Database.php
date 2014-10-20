@@ -72,7 +72,9 @@ class Database {
     public static function save($table, $object)
     {
         $collection = self::$database->$table;
-        $collection->save($object->toArray());
+        $array = $object->toArray();
+        $collection->save($array);
+        $object->setId($array['_id']);
     }
     
     /**
