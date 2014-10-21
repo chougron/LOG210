@@ -56,7 +56,7 @@ class Restaurateur extends User
     
     /**
      * Return the restaurants associated to the Restaurateur
-     * @return Array
+     * @return \App\Model\Restaurant[]
      */
     public function getRestaurants()
     {

@@ -68,8 +68,10 @@ class Restaurant extends Model
     public function delete() {
         //We get all the restaurants of the Restaurateur, and remove the link
         $restaurateur = $this->getRestaurateur();
-        $restaurateur->removeRestaurant($this);
-        $restaurateur->save();
+        if($restaurateur){
+            $restaurateur->removeRestaurant($this);
+            $restaurateur->save();
+        }
         parent::delete();
     }
 }

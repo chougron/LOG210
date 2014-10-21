@@ -17,7 +17,7 @@ class EntrepreneurController extends Controller{
     {
         //If we are not connected as an entrepreneur, send to the login page
         if(!Session::isConnected() || Session::getUser()->getType() != USER_ENTREPRENEUR){
-            Redirect::to('/entrepreneur/login');
+            return Redirect::to('/entrepreneur/login');
         }
         
         return View::render("entrepreneur/index.php", array('user' => Session::getUser()));
@@ -34,7 +34,7 @@ class EntrepreneurController extends Controller{
             //Confirm if PW matches
             if($user && $user->getPassword() == Entrepreneur::encryptPassword(Form::get('password'))){
                 Session::connect($user);
-                Redirect::to('/entrepreneur');
+                return Redirect::to('/entrepreneur');
             }
             
             $error = "Vos informations de connexion sont incorrects. Merci de réessayer.";
@@ -48,7 +48,7 @@ class EntrepreneurController extends Controller{
     {
         //If we are not connected as an entrepreneur, send to the login page
         if(!Session::isConnected() || Session::getUser()->getType() != USER_ENTREPRENEUR){
-            Redirect::to('/entrepreneur/login');
+            return Redirect::to('/entrepreneur/login');
         }
         
         //We select all the Restaurants without restaurateur
@@ -117,10 +117,97 @@ class EntrepreneurController extends Controller{
                         "Le restaurateur " . $user->getMail() . " a été ajouté sans restaurant associé.");
             }
             
-            Redirect::to('/entrepreneur');
+            return Redirect::to('/entrepreneur');
         }
         
         return View::render("entrepreneur/ajoutRestaurateur.php", array('restaurants' => $restaurants));
+    }
+    
+    public function editeRestaurateur($id = 0)
+    {
+        //If we are not connected as an entrepreneur, send to the login page
+        if(!Session::isConnected() || Session::getUser()->getType() != USER_ENTREPRENEUR){
+            return Redirect::to('/entrepreneur/login');
+        }
+        
+        //If no restaurateur is specified, display the list
+        if($id == 0){
+            $restaurateurs = Restaurateur::getBy(array());
+            return View::render("entrepreneur/listeEditeRestaurateur.php", array('restaurateurs' => $restaurateurs));
+        }
+        
+        $restaurateur = Restaurateur::getOneBy(array('_id' => new \MongoId($id)));
+        if(!$restaurateur){
+            return Redirect::to('/entrepreneur/editeRestaurateur');
+        }
+        
+        //We select all the Restaurants without Restaurateur
+        $restaurants = Restaurant::getBy(array('restaurateur' => null));
+        
+        $owned_restaurants = array();
+        
+        //We add to them the restaurants from the current Restaurateur
+        foreach($restaurateur->getRestaurants() as $restaurant){
+            $restaurants[] = $restaurant;
+            $owned_restaurants[] = $restaurant->getId();
+        }
+        
+        if(Form::exists('restaurateur_edit_form')){
+            
+            //We check if all the input are filled
+            if(Form::checkEmpty(array('firstName','mail','name'))){
+                Session::addFlashMessage("Erreur :", 
+                        'error', 
+                        "Tous les champs ne sont pas remplis.");
+                $error = "Veuillez remplir tous les champs";
+                return View::render("entrepreneur/editeRestaurateur.php", array('error' => $error, 'restaurants' => $restaurants, 'owned_restaurants' => $owned_restaurants, 'restaurateur' => $restaurateur));
+            }
+            
+            //We check if the mail address is not already taken
+            $found = Restaurateur::getOneBy(array('_mail' => Form::get('mail')));
+            if($found && $found->getId() != $restaurateur->getId()){
+                Session::addFlashMessage("Erreur :", 
+                        'error', 
+                        "Adresse e-mail non disponible.");
+                $error = "Cette adresse e-mail est déjà associée à un compte. Veuillez en choisir une autre.";
+                return View::render("entrepreneur/editeRestaurateur.php", array('error' => $error, 'restaurants' => $restaurants, 'owned_restaurants' => $owned_restaurants, 'restaurateur' => $restaurateur));
+            }
+            
+            //We associate the values
+            $restaurateur->setFirstName(Form::get('firstName'));
+            $restaurateur->setMail(Form::get('mail'));
+            $restaurateur->setName(Form::get('name'));
+            //We save this User in the DB
+            $restaurateur->save();
+            
+            //We delete the old restaurants
+            foreach($restaurateur->getRestaurants() as $restaurant){
+                $restaurateur->removeRestaurant($restaurant);
+                $restaurant->removeRestaurateur();
+                $restaurant->save();
+            }
+            
+            //We add the restaurants to the Restaurateur
+            foreach(Form::get('restaurants') as $restaurantId){
+                if($restaurantId != ""){
+                    $restaurant = Restaurant::getOneBy(array('_id' => new \MongoId($restaurantId)));
+                } else {
+                    $restaurant = null;
+                }
+                if($restaurant){
+                    $restaurateur->addRestaurant($restaurant);
+                }
+            }
+            $restaurateur->save();
+            
+            
+            Session::addFlashMessage("Restaurateur edité avec succès", 
+                    'success', 
+                    "Le restaurateur " . $restaurateur->getMail() . " a été  édité avec succès.");
+            Redirect::to('/entrepreneur');
+        }
+        
+        return View::render("entrepreneur/editeRestaurateur.php", array('restaurants' => $restaurants, 'owned_restaurants' => $owned_restaurants, 'restaurateur' => $restaurateur));
     }
     
     public function supprimeRestaurateur()
@@ -167,7 +254,7 @@ class EntrepreneurController extends Controller{
             Redirect::to('/entrepreneur/login');
         }
         
-        //We select all the Restaurants without restaurateur
+        //We select all the Restaurateur
         $restaurateurs = Restaurateur::getBy(array());
         
         if(Form::exists('restaurant_add_form')){
@@ -181,8 +268,8 @@ class EntrepreneurController extends Controller{
                 return View::render("entrepreneur/ajoutRestaurant.php", array('error' => $error, 'restaurateurs' => $restaurateurs));
             }
             
-            //We check if the mail address is not already taken
-            if(Restaurateur::getOneBy(array('name' => Form::get('name')))){
+            //We check if the name is not already taken
+            if(Restaurant::getOneBy(array('name' => Form::get('name')))){
                 Session::addFlashMessage("Erreur :", 
                         'error', 
                         "Ce nom de restaurant est non disponible.");
@@ -223,6 +310,85 @@ class EntrepreneurController extends Controller{
         }
         
         return View::render("entrepreneur/ajoutRestaurant.php", array('restaurateurs' => $restaurateurs));
+    }
+    
+    
+    public function editeRestaurant($id = 0)
+    {
+        //If we are not connected as an entrepreneur, send to the login page
+        if(!Session::isConnected() || Session::getUser()->getType() != USER_ENTREPRENEUR){
+            Redirect::to('/entrepreneur/login');
+        }
+        
+        //If id is not set, we display the list of restaurants
+        if($id == 0){
+            $restaurants = Restaurant::getBy(array());
+            return View::render("entrepreneur/listeEditeRestaurant.php", array('restaurants' => $restaurants));
+        }
+        
+        $restaurant = Restaurant::getOneBy(array('_id' => new \MongoId($id)));
+        if(!$restaurant){
+            return Redirect::to('/entrepreneur/editeRestaurant');
+        }
+        
+        //We select all the Restaurateurs
+        $restaurateurs = Restaurateur::getBy(array());
+        
+        if(Form::exists('restaurant_edit_form')){
+            
+            //We check if all the input are filled
+            if(Form::checkEmpty(array('name'))){
+                Session::addFlashMessage("Erreur :", 
+                        'error', 
+                        "Tous les champs ne sont pas remplis.");
+                $error = "Veuillez remplir tous les champs";
+                return View::render("entrepreneur/editeRestaurant.php", array('error' => $error, 'restaurateurs' => $restaurateurs, 'restaurant' => $restaurant));
+            }
+            
+            //We check if the name is not already taken
+            $found = Restaurant::getOneBy(array('name' => Form::get('name')));
+            if($found && $found->getId() != $restaurant->getId()){
+                Session::addFlashMessage("Erreur :", 
+                        'error', 
+                        "Ce nom de restaurant est non disponible.");
+                $error = "Ce nom de restaurant existe déjà. Veuillez en choisir une autre.";
+                return View::render("entrepreneur/editeRestaurant.php", array('error' => $error, 'restaurateurs' => $restaurateurs, 'restaurant' => $restaurant));
+            }
+            
+            //We create a new Restaurant, and associate the values
+            $restaurant->setName(Form::get('name'));
+            //We save this Restaurant in the DB
+            $restaurant->save();
+            
+            //We remove the current Restaurateur
+            $restaurateur = $restaurant->getRestaurateur();
+            if($restaurateur){
+                $restaurateur->removeRestaurant($restaurant);
+                $restaurateur->save();
+                $restaurant->removeRestaurateur();
+                $restaurant->save();
+            }
+            
+            //We add the Restaurateur to the Restaurant
+            $restaurateurId = Form::get('restaurateur');
+            if($restaurateurId != ""){
+                $restaurateur = Restaurateur::getOneBy(array('_id' => new \MongoId($restaurateurId)));
+                //If the Restaurateur exist, we add the Restaurant to it
+                if($restaurateur){
+                    $restaurateur->addRestaurant($restaurant);
+                    $restaurateur->save();
+                    $restaurateurAdded = true;
+                }
+            }
+            
+            Session::addFlashMessage("Restaurant édité avec succès", 
+                    'success', 
+                    "Le restaurant " . $restaurant->getName() . " a été édité avec succès.");
+            
+            Redirect::to('/entrepreneur');
+        }
+        
+        return View::render("entrepreneur/editeRestaurant.php", array('restaurateurs' => $restaurateurs, 'restaurant' => $restaurant));
     }
     
     public function supprimeRestaurant()
