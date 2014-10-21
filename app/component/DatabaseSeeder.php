@@ -36,9 +36,29 @@ class DatabaseSeeder {
         //Add a Restaurateur if he doesn't exist
         if(! Restaurateur::getOneBy(array('_mail'=>"restaurateur@test.com"))){
             $user = new Restaurateur();
-            $user->setFirstName("Mac");
-            $user->setName("Donald");
+            $user->setFirstName("MacDonald");
+            $user->setName("Ronald");
             $user->setMail("restaurateur@test.com");
+            $user->setPassword("123123");
+            $user->save();
+        }
+        
+        //Add a Restaurateur if he doesn't exist
+        if(! Restaurateur::getOneBy(array('_mail'=>"restaurateur2@test.com"))){
+            $user = new Restaurateur();
+            $user->setFirstName("Tiki");
+            $user->setName("Ming");
+            $user->setMail("restaurateur2@test.com");
+            $user->setPassword("123123");
+            $user->save();
+        }
+
+        //Add a Restaurateur if he doesn't exist
+        if(! Restaurateur::getOneBy(array('_mail'=>"restaurateur3@test.com"))){
+            $user = new Restaurateur();
+            $user->setFirstName("Jean");
+            $user->setName("Bono");
+            $user->setMail("restaurateur3@test.com");
             $user->setPassword("123123");
             $user->save();
         }
