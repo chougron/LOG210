@@ -24,16 +24,15 @@ class ProfileController extends Controller{
                         
             $user = Session::getUser();
             //We check if the password and the check are the same
-            if(Form::exists('password')){
+            if(Form::exists('password') && (Form::get('password') != "")){
                 if(Form::get('password') != Form::get('password_check')){
                     $error = "Les mots de passe ne correspondent pas.";
                     return View::render("register/index.php", array('error' => $error));
                 }else{
                     $user->setPassword(Form::get('password'));
                 }
-            }         
+            }
             //associate the values
-            
             $user->setAdress(Form::get('address'));
             $user->setFirstName(Form::get('firstName'));
             $user->setName(Form::get('name'));
