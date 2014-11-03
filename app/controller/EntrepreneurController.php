@@ -17,6 +17,7 @@ class EntrepreneurController extends Controller{
     {
         //If we are not connected as an entrepreneur, send to the login page
         if(!Session::isConnected() || Session::getUser()->getType() != USER_ENTREPRENEUR){
+            Session::disconnect();
             return Redirect::to('/entrepreneur/login');
         }
         
