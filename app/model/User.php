@@ -10,7 +10,8 @@ class User extends Model
     protected $_password;
     protected $_firstName;
     protected $_name;
-    protected $_adress;
+    protected $_mainAdress;
+    protected $_secAdress;
     protected $_phoneNumber;
     protected $_birthday;
     
@@ -41,7 +42,15 @@ class User extends Model
      * @return String
      */
     public function getAdress() {
-        return $this->_adress;
+        return $this->_mainAdress;
+    }
+    
+    /**
+     * Get the secondary Adress of the User
+     * @return String
+     */
+    public function getSecAdress() {
+        return $this->_secAdress;
     }
     
     /**
@@ -106,8 +115,12 @@ class User extends Model
             trigger_error('The adress must have a value', E_USER_WARNING);
         }
         else {
-            $this->_adress = $adress;
+            $this->_mainAdress = $adress;
         }
+    }
+    
+    public function setSecAdress($adress){
+        $this->_secAdress = $adress;
     }
     
     public function setMail($mail) {

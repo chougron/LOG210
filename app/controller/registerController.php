@@ -15,7 +15,7 @@ class RegisterController extends Controller{
         if(Form::exists('register_form')){
             
             //We check if all the input are filled
-            if(Form::checkEmpty(array('address','firstName','mail','name','password','password_check','phoneNumber', 'birthday'))){
+            if(Form::checkEmpty(array('mainAddress','firstName','mail','name','password','password_check','phoneNumber', 'birthday'))){
                 $error = "Veuillez remplir tous les champs";
                 return View::render("register/index.php", array('error' => $error));
             }
@@ -34,7 +34,8 @@ class RegisterController extends Controller{
             
             //We create a new User, and associate the values
             $user = new Client();
-            $user->setAdress(Form::get('address'));
+            $user->setAdress(Form::get('mainAddress'));
+            $user->setSecAdress(Form::get('secAddress'));
             $user->setFirstName(Form::get('firstName'));
             $user->setMail(Form::get('mail'));
             $user->setName(Form::get('name'));

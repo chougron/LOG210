@@ -17,7 +17,7 @@ class ProfileController extends Controller{
         if(Form::exists('profile_form')){
             
             //We check if all the input are filled
-            if(Form::checkEmpty(array('address','firstName','mail','name','password','password_check','phoneNumber', 'birthday'))){
+            if(Form::checkEmpty(array('mainAddress','firstName','mail','name','password','password_check','phoneNumber', 'birthday'))){
                 $error = "Veuillez remplir tous les champs";
                 return View::render("register/index.php", array('error' => $error));
             }
@@ -33,7 +33,8 @@ class ProfileController extends Controller{
                 }
             }
             //associate the values
-            $user->setAdress(Form::get('address'));
+            $user->setAdress(Form::get('mainAddress'));
+            $user->setSecAdress(Form::get('secAddress'));
             $user->setFirstName(Form::get('firstName'));
             $user->setName(Form::get('name'));
             $user->setPhoneNumber(Form::get('phoneNumber'));
