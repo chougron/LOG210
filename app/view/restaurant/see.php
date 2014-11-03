@@ -1,5 +1,6 @@
 <h2><?php echo $restaurant->getName(); ?></h2>
-<?php echo $restaurant->getDescription(); ?><br/><br/>
+<?php echo $restaurant->getDescription(); ?><br/>
+
 
 <div class="form-group">
     <label for="menuItems">Items</label>
@@ -7,10 +8,16 @@
         <option value=""></option>
         
         <?php foreach($menuItems as $menuItems): ?>
-
+            
         <?php endforeach; ?>
     </select>
   </div>
 <div class="btn">
-    <button   class="btn btn-primary">Commander</button>
+    <button   onclick="myFunction()" class="btn btn-primary">Ajouter au panier</button>
 </div>
+
+<script>
+function myFunction() {
+    alert("Les items sélectionnés ont étés ajoutés au panier.");
+}
+</script>
