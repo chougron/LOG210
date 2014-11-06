@@ -82,16 +82,22 @@ class DatabaseSeeder {
         if(!Restaurant::getOneBy(array('name'=>'Ma Queue Mickey'))){
             $restaurant = new Restaurant();
             $restaurant->setName('Ma Queue Mickey');
+            $restaurant->setDescription('Un sympathique petit restaurant aux allures pitoresques, et qui ne manque pas de joyeux serveurs prêts à répondre à vos exigences !');
+            $restaurant->setPicture("img/generic.jpg");
             $restaurant->save();
         }
         if(!Restaurant::getOneBy(array('name'=>'Kitchen For Chinese'))){
             $restaurant = new Restaurant();
             $restaurant->setName('Kitchen For Chinese');
+            $restaurant->setDescription('Venez manger chinois dans ce joli restaurant. KFC et toute son équipe vous accueillent 24h/24, et travaillerons durs, comme des vrais petits chinois pour que vous puissiez profiter du buffet à volonté.');
+            $restaurant->setPicture("img/chinois.jpg");
             $restaurant->save();
         }
         if(!Restaurant::getOneBy(array('name'=>'Sous-marins express'))){
             $restaurant = new Restaurant();
             $restaurant->setName('Sous-marins express');
+            $restaurant->setDescription('Si tu veux des sous-marins, et vite, tu es au bon endroit. Notre chef, Pablo, est recordman du nombre de sou-marins préparés en 10 minutes. Goûte à notre spécial "moutarde/sirop d\'érable" !');
+            $restaurant->setPicture("img/generic.jpg");
             $restaurant->save();
         }
     }

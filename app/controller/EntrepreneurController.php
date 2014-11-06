@@ -260,7 +260,7 @@ class EntrepreneurController extends Controller{
         if(Form::exists('restaurant_add_form')){
             
             //We check if all the input are filled
-            if(Form::checkEmpty(array('name'))){
+            if(Form::checkEmpty(array('name')) || Form::checkEmpty(array('description'))){
                 Session::addFlashMessage("Erreur :", 
                         'error', 
                         "Tous les champs ne sont pas remplis.");
@@ -280,6 +280,10 @@ class EntrepreneurController extends Controller{
             //We create a new Restaurant, and associate the values
             $restaurant = new Restaurant();
             $restaurant->setName(Form::get('name'));
+            $restaurant->setDescription(Form::get('description'));
+            $restaurant->setPicture('img/generic.jpg');
+            //TODO: Set the picture from the form
+            
             //We save this Restaurant in the DB
             $restaurant->save();
             
@@ -337,7 +341,7 @@ class EntrepreneurController extends Controller{
         if(Form::exists('restaurant_edit_form')){
             
             //We check if all the input are filled
-            if(Form::checkEmpty(array('name'))){
+            if(Form::checkEmpty(array('name')) || Form::checkEmpty(array('description'))){
                 Session::addFlashMessage("Erreur :", 
                         'error', 
                         "Tous les champs ne sont pas remplis.");
@@ -357,6 +361,9 @@ class EntrepreneurController extends Controller{
             
             //We create a new Restaurant, and associate the values
             $restaurant->setName(Form::get('name'));
+            $restaurant->setDescription(Form::get('description'));
+            //TODO: Set the picture from the form
+            
             //We save this Restaurant in the DB
             $restaurant->save();
             

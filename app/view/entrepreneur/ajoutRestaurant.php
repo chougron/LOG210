@@ -7,6 +7,11 @@
   </div>
     
   <div class="form-group">
+    <label for="name">Description</label>
+    <textarea class="form-control" name="description" id="description" placeholder="Description" required></textarea>
+  </div>
+    
+  <div class="form-group">
     <label for="restaurateur">Restaurateur</label>
     <select name="restaurateur" id="restaurateur" class="form-control">
         <option value=""></option>

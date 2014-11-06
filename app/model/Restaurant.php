@@ -18,6 +18,18 @@ class Restaurant extends Model
      * @var String
      */
     protected $restaurateur;
+    
+    /**
+     * The description of the Restaurant
+     * @var String
+     */
+    protected $description;
+    
+    /**
+     * The picture of the Restaurant
+     * @var String
+     */
+    protected $picture;
 
     /**
      * Get the name of the Restaurant
@@ -65,6 +77,39 @@ class Restaurant extends Model
         $this->restaurateur = NULL;
     }
     
+    /**
+     * Return the description of the Restaurant
+     * @return String
+     */
+    public function getDescription() {
+        return $this->description;
+    }
+
+    /**
+     * Return the picture adress of the Restaurant
+     * @return String
+     */
+    public function getPicture() {
+        return $this->picture;
+    }
+
+    /**
+     * Set the Restaurant description
+     * @param String $description
+     */
+    public function setDescription($description) {
+        $this->description = $description;
+    }
+
+    /**
+     * Set the picture adress of the Restaurant
+     * @param String $picture
+     */
+    public function setPicture($picture) {
+        $this->picture = $picture;
+    }
+
+        
     public function delete() {
         //We get all the restaurants of the Restaurateur, and remove the link
         $restaurateur = $this->getRestaurateur();
