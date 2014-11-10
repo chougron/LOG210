@@ -4,7 +4,6 @@
 namespace App\Model;
 
 use App\Component\Model;
-use App\Component\MenuItem;
 
 define('ITEM_MENU', "Menu");
 
@@ -26,15 +25,15 @@ class Menu extends Model
      * Erases the item
      * @param type $itemName
      */
-    public function removeItem(MenuItem $menuItem)
+    public function removeItem(ItemMenu $itemMenu)
     {
-        $id = $menuItem->getId();
+        $id = $itemMenu->getId();
         //If the object doesn't have an id, return
         if(is_null($id)) return;
 
         //We search the $id and remove it if we find it
-        foreach($this->_menuItems as $key => $menuItem){
-            if($id->__toString() == $menuItem->__toString()){
+        foreach($this->_menuItems as $key => $itemMenu){
+            if($id->__toString() == $itemMenu->__toString()){
                 unset($this->_menuItems[$key]);
                 return;
             }
@@ -46,13 +45,13 @@ class Menu extends Model
      * @param type $itemName
      * @param type $itemPrice
      */
-    public function addItem(MenuItem $menuItem)
+    public function addItem(ItemMenu $menuItem)
     {
         $id = $menuItem->getId();
         //If the object doesn't have an id, return
         if(is_null($id)) return;
 
-        //If the MenuItem is already in the array, return
+        //If the ItemMenu is already in the array, return
         foreach($this->_menuItems as $menuItem){
             if($id->__toString() == $menuItem->__toString()){
                 return;

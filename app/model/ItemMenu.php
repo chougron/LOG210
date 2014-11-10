@@ -5,7 +5,7 @@ namespace App\Model;
 
 use App\Model\Model;
 
-class MenuItem extends Model
+class ItemMenu extends Model
 {
     /**
      * The name of the item
@@ -32,7 +32,7 @@ class MenuItem extends Model
     protected $menu;
 
     /**
-     * Set the name of the MenuItem
+     * Set the name of the ItemMenu
      * @param $name
      */
     public function setName($name)
@@ -41,7 +41,7 @@ class MenuItem extends Model
     }
 
     /**
-     * Get the name of the MenuItem
+     * Get the name of the ItemMenu
      * @return String
      */
     public function getName()
@@ -50,7 +50,7 @@ class MenuItem extends Model
     }
 
     /**
-     * Set the name of the MenuItem
+     * Set the name of the ItemMenu
      * @param $price
      */
     public function setPrice($price)
