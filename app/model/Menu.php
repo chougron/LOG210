@@ -24,16 +24,19 @@ class Menu extends Model{
      * Erases the item
      * @param type $itemName
      */
-    public function removeItem($itemName){   
-        $success = FALSE;
-        foreach($this->_menuItems as $menuItem):
-            if(in_array($itemName,$menuItem)){
-                    array_splice($menuItems,$i,1);
-                    $success = TRUE;
+    public function removeItem(MenuItem $menuItem)
+    {
+        $id = $menuItem->getId();
+        //If the object doesn't have an id, return
+        if(is_null($id)) return;
+
+        //We search the $id and remove it if we find it
+        foreach($this->_menuItems as $key => $menuItem){
+            if($id->__toString() == $menuItem->__toString()){
+                unset($this->_menuItems[$key]);
+                return;
             }
-            $i++;
-        endforeach;
-        return success;
+        }
     }
     
     /**
@@ -41,7 +44,19 @@ class Menu extends Model{
      * @param type $itemName
      * @param type $itemPrice
      */
-    public function addItem($itemName, $itemPrice){
-        $this->_menuItems[] = array($itemName,$itemPrice);
+    public function addItem(MenuItem $menuItem)
+    {
+        $id = $menuItem->getId();
+        //If the object doesn't have an id, return
+        if(is_null($id)) return;
+
+        //If the MenuItem is already in the array, return
+        foreach($this->_menuItems as $menuItem){
+            if($id->__toString() == $menuItem->__toString()){
+                return;
+            }
+        }
+
+        $this->_menuItems[] = $menuItem;
     }
 }

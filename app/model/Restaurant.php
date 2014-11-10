@@ -4,6 +4,7 @@ namespace App\Model;
 
 use App\Component\Model;
 use App\Model\Restaurateur;
+use App\Model\Menu;
 
 class Restaurant extends Model
 {
@@ -18,7 +19,13 @@ class Restaurant extends Model
      * @var String
      */
     protected $restaurateur;
-    
+
+    /**
+     * The id of the associated Menu
+     * @var String
+     */
+    protected $menu;
+
     /**
      * The description of the Restaurant
      * @var String
@@ -67,6 +74,25 @@ class Restaurant extends Model
     public function setRestaurateur(Restaurateur $restaurateur)
     {
         $this->restaurateur = $restaurateur->getId();
+    }
+
+    /**
+     * Return the associated Menu
+     * @return \App\Model\Menu
+     */
+    public function getMenu()
+    {
+        $menu = Menu::getOneBy(array('_id' => $this->menu));
+        return $menu;
+    }
+
+    /**
+     * Set the associated Menu
+     * @param \App\Model\Menu $menu
+     */
+    public function setMenu(Menu $menu)
+    {
+        $this->menu = $menu->getId();
     }
     
     /**

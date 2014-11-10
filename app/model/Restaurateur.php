@@ -46,8 +46,8 @@ class Restaurateur extends User
             return;
         }
        //We search the $id and remove it if we find it
-        foreach($this->_restaurants as $key => $restaurant){
-            if($id->__toString() == $restaurant->__toString()){
+        foreach($this->_restaurants as $key => $idRestaurant){
+            if($id->__toString() == $idRestaurant->__toString()){
                 unset($this->_restaurants[$key]);
                 return;
             }
