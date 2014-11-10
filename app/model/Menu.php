@@ -4,10 +4,12 @@
 namespace App\Model;
 
 use App\Component\Model;
+use App\Component\MenuItem;
 
 define('ITEM_MENU', "Menu");
 
-class Menu extends Model{
+class Menu extends Model
+{
     
     protected $_menuItems = array();
     
@@ -58,5 +60,16 @@ class Menu extends Model{
         }
 
         $this->_menuItems[] = $menuItem;
+    }
+
+    public function delete()
+    {
+        //We get all the menuItems of the Menu, and remove the link
+        $menuItem = $this->getMenuItems();
+        if($menuItem){
+            $menuItem->removeMenu($this);
+            $menuItem->save();
+        }
+        parent::delete();
     }
 }

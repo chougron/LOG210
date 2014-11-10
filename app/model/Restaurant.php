@@ -82,8 +82,7 @@ class Restaurant extends Model
      */
     public function getMenu()
     {
-        $menu = Menu::getOneBy(array('_id' => $this->menu));
-        return $menu;
+        return Menu::getOneBy(array('_id' => $this->menu));
     }
 
     /**
@@ -93,6 +92,11 @@ class Restaurant extends Model
     public function setMenu(Menu $menu)
     {
         $this->menu = $menu->getId();
+    }
+
+    public function hasMenu()
+    {
+        return $this->menu != null;
     }
     
     /**

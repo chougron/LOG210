@@ -20,6 +20,12 @@ class MenuItem extends Model
     protected $price;
 
     /**
+     * The description of the item
+     * @var String
+     */
+    protected $description;
+
+    /**
      * The id of the associated Menu
      * @var String
      */
@@ -53,13 +59,12 @@ class MenuItem extends Model
     }
 
     /**
-     * Return the associated Menu
-     * @return \App\Model\Menu
+     * Return the price of the item
+     * @return Int
      */
-    public function getMenu()
+    public function getPrice()
     {
-        $menu = Menu::getOneBy(array('_id' => $this->menu));
-        return $menu;
+        return $this->price;
     }
 
     /**
@@ -69,5 +74,15 @@ class MenuItem extends Model
     public function setMenu(Menu $menu)
     {
         $this->menu = $menu->getId();
+    }
+
+    /**
+     * Return the associated Menu
+     * @return \App\Model\Menu
+     */
+    public function getMenu()
+    {
+        $menu = Menu::getOneBy(array('_id' => $this->menu));
+        return $menu;
     }
 } 
