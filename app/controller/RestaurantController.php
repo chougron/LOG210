@@ -31,6 +31,6 @@ class RestaurantController extends Controller{
             Redirect::to('/restaurant');
         }
         
-        return View::render("restaurant/see.php", array('restaurant'=>$restaurant));
+        return View::render("restaurant/see.php", array('restaurant'=>$restaurant, 'client'=> Session::getUser()));
     }
 }
