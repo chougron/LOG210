@@ -7,11 +7,8 @@ use App\Model\ItemMenu;
 use App\Model\Restaurateur;
 use App\Model\Restaurant;
 use App\Model\Client;
-<<<<<<< HEAD
 use App\Model\Address;
-=======
 use App\Model\Menu;
->>>>>>> Modified DatabaseSeeder file to add menus in DB.
 
 class DatabaseSeeder {
     /**
@@ -134,6 +131,11 @@ class DatabaseSeeder {
 
         $menu = new Menu();
         $menu->setRestaurant($restaurant);
+        $restaurant->setMenu($menu);
+        $restaurant->save();
+
+        $menu->setName("Les suplices de la gueule");
+        $menu->save();
 
         $item1 = new ItemMenu();
         $item1->setName("Burger");
@@ -153,11 +155,15 @@ class DatabaseSeeder {
         $menu->addItem($item2);
         $menu->save();
 
-
         $restaurant = Restaurant::getOneBy(array('name' => 'Kitchen For Chinese'));
 
         $menu = new Menu();
         $menu->setRestaurant($restaurant);
+        $restaurant->setMenu($menu);
+        $restaurant->save();
+
+        $menu->setName("Les plaisirs du palais");
+        $menu->save();
 
         $item1 = new ItemMenu();
         $item1->setName("Poutine cantonaise");
