@@ -129,62 +129,66 @@ class DatabaseSeeder {
     {
         $restaurant = Restaurant::getOneBy(array('name' => 'Ma Queue Mickey'));
 
-        $menu = new Menu();
-        $menu->setRestaurant($restaurant);
+        if(!$restaurant->hasMenu()){
+            $menu = new Menu();
+            $menu->setRestaurant($restaurant);
 
-        $menu->setName("Les suplices de la gueule");
-        $menu->save();
+            $menu->setName("Les suplices de la gueule");
+            $menu->save();
 
-        $item1 = new ItemMenu();
-        $item1->setName("Burger");
-        $item1->setDescription("Un petit pas coupé en deux avec un steak entre les deux.");
-        $item1->setPrice(6.95);
-        $item1->save();
+            $item1 = new ItemMenu();
+            $item1->setName("Burger");
+            $item1->setDescription("Un petit pas coupé en deux avec un steak entre les deux.");
+            $item1->setPrice(6.95);
+            $item1->save();
 
-        $menu->addItem($item1);
-        $menu->save();
+            $menu->addItem($item1);
+            $menu->save();
 
-        $item2 = new ItemMenu();
-        $item2->setName("Sous-marin 2000");
-        $item2->setDescription("Sandwich de 2000g avec pâté de volaille, oeufs brouillés, steak de kangourou et pilulles contre la toux.");
-        $item2->setPrice(3.99);
-        $item2->save();
+            $item2 = new ItemMenu();
+            $item2->setName("Sous-marin 2000");
+            $item2->setDescription("Sandwich de 2000g avec pâté de volaille, oeufs brouillés, steak de kangourou et pilulles contre la toux.");
+            $item2->setPrice(3.99);
+            $item2->save();
 
-        $menu->addItem($item2);
-        $menu->save();
+            $menu->addItem($item2);
+            $menu->save();
 
-        $restaurant->setMenu($menu);
-        $restaurant->save();
+            $restaurant->setMenu($menu);
+            $restaurant->save();
+        }
         
         $restaurant = Restaurant::getOneBy(array('name' => 'Kitchen For Chinese'));
 
-        $menu = new Menu();
-        $menu->setRestaurant($restaurant);
+        if(!$restaurant->hasMenu()){
+            $menu = new Menu();
+            $menu->setRestaurant($restaurant);
 
-        $menu->setName("Les plaisirs du palais");
-        $menu->save();
+            $menu->setName("Les plaisirs du palais");
+            $menu->save();
 
-        $item1 = new ItemMenu();
-        $item1->setName("Poutine cantonaise");
-        $item1->setDescription("Frites taillées en grain de riz avec du cantonais en grain");
-        $item1->setPrice(25.45);
-        $item1->save();
+            $item1 = new ItemMenu();
+            $item1->setName("Poutine cantonaise");
+            $item1->setDescription("Frites taillées en grain de riz avec du cantonais en grain");
+            $item1->setPrice(25.45);
+            $item1->save();
 
-        $menu->addItem($item1);
-        $menu->save();
-        $restaurant->setMenu($menu);
-        $restaurant->save();
+            $menu->addItem($item1);
+            $menu->save();
+            $restaurant->setMenu($menu);
+            $restaurant->save();
 
-        $item2 = new ItemMenu();
-        $item2->setName("Pâté chinois");
-        $item2->setDescription("Inventé en Amérique");
-        $item2->setPrice(1.95);
-        $item2->save();
+            $item2 = new ItemMenu();
+            $item2->setName("Pâté chinois");
+            $item2->setDescription("Inventé en Amérique");
+            $item2->setPrice(1.95);
+            $item2->save();
 
-        $menu->addItem($item2);
-        $menu->save();
+            $menu->addItem($item2);
+            $menu->save();
 
-        $restaurant->setMenu($menu);
-        $restaurant->save();
+            $restaurant->setMenu($menu);
+            $restaurant->save();
+        }
     }
 }
