@@ -111,8 +111,7 @@ class RestaurateurController extends Controller{
                 return View::render("restaurateur/editeMenu.php", array('error' => $error, 'restaurant' => $restaurant));
             }
 
-            $found = Menu::getOneBy(array('_name' => Form::get('menuName')));
-            if($found){
+            if($menu->getName()==Form::get('menuName')){
                 Session::addFlashMessage("Erreur :",
                     'error',
                     "Le nom n'a pas été modifié.");

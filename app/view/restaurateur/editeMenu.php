@@ -34,17 +34,17 @@
 <form role="form" action="restaurateur/editeMenu/<?php echo $restaurant->getId(); ?>" method="POST">
     <div class="form-group">
         <label for="name">Nom</label>
-        <input type="text" class="form-control" name="name" id="name" placeholder="Nom" >
+        <input type="text" class="form-control" name="name" id="name" placeholder="Nom" required>
     </div>
 
     <div class="form-group">
         <label for="description">Description</label>
-        <textarea class="form-control" name="description" id="description" placeholder="Description"></textarea>
+        <textarea class="form-control" name="description" id="description" placeholder="Description" required></textarea>
     </div>
 
     <div class="form-group">
         <label for="price">Prix</label>
-        <input type="text" class="form-control" name="price" id="price" placeholder="Price">
+        <input type="text" class="form-control" name="price" id="price" placeholder="Price" required>
     </div>
 
     <button type="submit" class="btn btn-default center-block" name="menu_edit_form">Ajouter</button>
@@ -52,7 +52,7 @@
 <h5>Nom du menu</h5>
 <form role="form" action="restaurateur/editeMenu/<?php echo $restaurant->getId(); ?>" method="POST">
     <div class="form-group">
-        <input text="text" class="form-control" name="menuName" id="menuName" placeholder="MenuName" value="<?php echo $restaurant->getMenu()->getName();?>">
+        <input text="text" class="form-control" name="menuName" id="menuName" placeholder="MenuName" value="<?php echo $restaurant->getMenu()->getName();?>" required>
     </div>
 
     <button type="submit" class="btn btn-default center-block" name="menu_name_edit_form">Modifier</button>
