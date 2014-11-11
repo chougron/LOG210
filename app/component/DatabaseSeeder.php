@@ -6,6 +6,7 @@ use App\Model\Entrepreneur;
 use App\Model\Restaurateur;
 use App\Model\Restaurant;
 use App\Model\Client;
+use App\Model\Address;
 
 class DatabaseSeeder {
     /**
@@ -63,17 +64,26 @@ class DatabaseSeeder {
             $user->save();
         }
         
-        //Add a Restaurateur if he doesn't exist
+        //Add a Client if he doesn't exist
+        $address = Address::getOneBy(array('address' => '18 Rue des Roses'));
+        if(!$address){
+            $address = new Address();
+            $address->setAddress('18 Rue des Roses');
+            $address->save();
+        }
         if(! Client::getOneBy(array('_mail'=>"client@test.com"))){
             $user = new Client();
             $user->setFirstName("Jean");
             $user->setName("Bon");
             $user->setMail("client@test.com");
-            $user->setAdress("18 Rue des Roses");
+            $user->setAdress($address);
             $user->setBirthday("10 Janvier 1973");
             $user->setPhoneNumber("593 489 2354");  
             $user->setPassword("123123");
             $user->save();
+            
+            $address->setUser($user);
+            $address->save();
         }
     }
     

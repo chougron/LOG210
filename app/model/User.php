@@ -11,7 +11,6 @@ class User extends Model
     protected $_firstName;
     protected $_name;
     protected $_mainAdress;
-    protected $_secAdress;
     protected $_phoneNumber;
     protected $_birthday;
     
@@ -39,18 +38,10 @@ class User extends Model
     
     /**
      * Get the Adress of the User
-     * @return String
+     * @return Address
      */
     public function getAdress() {
-        return $this->_mainAdress;
-    }
-    
-    /**
-     * Get the secondary Adress of the User
-     * @return String
-     */
-    public function getSecAdress() {
-        return $this->_secAdress;
+        return Address::getOneBy(array('_id' => new \MongoId($this->_mainAdress)));
     }
     
     /**
@@ -110,17 +101,13 @@ class User extends Model
         }
     }
     
-    public function setAdress($adress) {
+    public function setAdress(Address $adress) {
         if (!isset($adress)) {
             trigger_error('The adress must have a value', E_USER_WARNING);
         }
         else {
-            $this->_mainAdress = $adress;
+            $this->_mainAdress = $adress->getId();
         }
-    }
-    
-    public function setSecAdress($adress){
-        $this->_secAdress = $adress;
     }
     
     public function setMail($mail) {

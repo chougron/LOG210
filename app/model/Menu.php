@@ -5,8 +5,6 @@ namespace App\Model;
 
 use App\Component\Model;
 
-define('ITEM_MENU', "Menu");
-
 class Menu extends Model
 {
     
