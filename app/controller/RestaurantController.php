@@ -103,7 +103,8 @@ class RestaurantController extends Controller{
             $total += $item->quantity * $item->getPrice();
         }
         
-        $url = "https://api-3t.sandbox.paypal.com/nvp";
+        /*
+        $url = "https://api.paypal.com/nvp";
         $url.= "?METHOD=SetExpressCheckout&VERSION=109.0";
         $url.= "&USER=camille.hougron-facilitator_api1.gmail.com&PWD=1406519075&SIGNATURE=AFcWxV21C7fd0v3bYYYRCpSSRl31AuNKPdNYkjVrOZkal7ZEN8O5fX1K";
         $url.= "&PAYMENTREQUEST_0_AMT=".$total.".00";
@@ -120,8 +121,9 @@ class RestaurantController extends Controller{
         $token = explode("=", $token);
         $token = $token[1];
         
-        $address = "https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_express-checkout&token=".$token;
-        
+        $address = "https://www.paypal.com/cgi-bin/webscr?cmd=_express-checkout&token=".$token;
+        */
+        $address = "";
         return View::render("restaurant/validateCommand.php", array('command' => $command, 'address' => $address));
     }
 }
