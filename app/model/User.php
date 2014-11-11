@@ -40,7 +40,7 @@ class User extends Model
      * Get the Adress of the User
      * @return Address
      */
-    public function getAdress() {
+    public function getAddress() {
         return Address::getOneBy(array('_id' => new \MongoId($this->_mainAdress)));
     }
     
@@ -101,12 +101,12 @@ class User extends Model
         }
     }
     
-    public function setAdress(Address $adress) {
-        if (!isset($adress)) {
+    public function setAddress(Address $address) {
+        if (!isset($address)) {
             trigger_error('The adress must have a value', E_USER_WARNING);
         }
         else {
-            $this->_mainAdress = $adress->getId();
+            $this->_mainAdress = $address->getId();
         }
     }
     

@@ -6,7 +6,6 @@
     <input type="text" placeholder="Prénom" name="firstName" required><br/>
     <input type="text" placeholder="Nom" name="name" required><br/>
     <input type="text" placeholder="Adresse principale" name="mainAddress" required><br/>
-    <input type="text" placeholder="Adresse secondaire" name="secAddress" ><br/>
     <input type="tel" placeholder="Téléphone" name="phoneNumber" required><br/>
     <input type="date" placeholder="Date de Naissance" name="birthday" required><br/>
     <input type="submit" value="Valider" name="register_form">

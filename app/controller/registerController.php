@@ -34,8 +34,6 @@ class RegisterController extends Controller{
             
             //We create a new User, and associate the values
             $user = new Client();
-            $user->setAdress(Form::get('mainAddress'));
-            $user->setSecAdress(Form::get('secAddress'));
             $user->setFirstName(Form::get('firstName'));
             $user->setMail(Form::get('mail'));
             $user->setName(Form::get('name'));
@@ -43,6 +41,14 @@ class RegisterController extends Controller{
             $user->setPhoneNumber(Form::get('phoneNumber'));
             $user->setBirthday(Form::get('birthday'));
             //We save this User in the DB
+            $user->save();
+            
+            $address = new \App\Model\Address();
+            $address->setAddress(Form::get('mainAddress'));
+            $address->setUser($user);
+            $address->save();
+            
+            $user->setAddress($address);
             $user->save();
             
             return View::render("register/complete.php", array('user'=>$user));
