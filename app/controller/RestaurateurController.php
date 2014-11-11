@@ -70,7 +70,9 @@ class RestaurateurController extends Controller{
 
         if (Form::exists('menu_edit_form'))
         {
-            if(Form::checkEmpty(array('name', 'price'))){
+            $name = Form::get('name');
+            $price = Form::get('price');
+            if($name == "" || is_null($name) || $price == "" || is_null($price)){
                 Session::addFlashMessage("Erreur :",
                     'error',
                     "Tous les champs ne sont pas remplis.");
