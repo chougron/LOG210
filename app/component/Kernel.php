@@ -25,7 +25,7 @@ class Kernel {
             require_once $path;
         }
         //Load the models
-        $models = array('User', 'Client', 'Entrepreneur', 'Restaurant', 'Restaurateur', 'Test', 'ItemMenu', 'Menu');
+        $models = array('User', 'Client', 'Entrepreneur', 'Restaurant', 'Restaurateur', 'Test', 'ItemMenu', 'Menu', 'Commande');
         foreach($models as $model){
             $path = ROOT . '/app/model/' . $model . '.php';
             require_once $path;
