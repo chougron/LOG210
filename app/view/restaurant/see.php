@@ -1,50 +1,33 @@
 <h2><?php echo $restaurant->getName(); ?></h2>
 <?php
-echo $restaurant->getDescription();;
+echo $restaurant->getDescription();
 if($restaurant->hasMenu()){
-    $menuItems = $restaurant->getMenu()->getMenuItems();  
-    echo "got menu.";
-    
-     foreach ($menuItems as $menuItem): ?> 
-        <div class="panel panel-default">
-            <div class="panel-body">
-                <div class="row">  
-                    
-                    
-                        <div class="text-left">
-                            <?php echo $menuItem->getId(), " : " ,$menuItem->getName(); ?>
-                        </div>
-                        <div class="text-right">
-                            Prix : <?php echo $menuItem->getPrice(); ?>
-                        </div>
-                    <div class="col-sm-offset-9">
-                        <div class="input-group">
-
-                            <input type="number" class="form-control" min="0" value="0" >
-                            <span class="input-group-addon">Quantité</span>
-                        </div><!-- /input-group -->
-                    </div>
-                </div><!-- /.row -->
-            </div></div>
-    $menuItemQty = $menuItem->getId() => "0" ;
-<?php endforeach;
-}else{
-    echo "restaurant has no menu";
-}
-$menuItemQty = array();
-?><br/>
-
-
-<div class="form-group">
-    <label for="menuItems">Items</label><br/>
-
-
-</div>
-<div class="btn">
-    <button   onclick="" class="btn btn-primary">Rafraîchir la commande</button>
-</div>
+    $menuItems = $restaurant->getMenu()->getMenuItems();
+    ?>
+    <form action="order" method="post">
+        Menu : 
+    <input type="email" placeholder="E-mail" name="mail" required><br/>
+    <input type="password" placeholder="Mot de passe" name="password" required><br/>
+    <input type="password" placeholder="Vérification" name="password_check" required><br/>
+    <input type="text" placeholder="Prénom" name="firstName" required><br/>
+    <input type="text" placeholder="Nom" name="name" required><br/>
+    <input type="text" placeholder="Adresse principale" name="mainAddress" required><br/>
+    <input type="text" placeholder="Adresse secondaire" name="secAddress" ><br/>
+    <input type="tel" placeholder="Téléphone" name="phoneNumber" required><br/>
+    <input type="date" placeholder="Date de Naissance" name="birthday" required><br/>
+    <input type="submit" value="Valider" name="register_form">
+</form>
+<?php 
+}else{ 
+    ?>
 <div class="row">
-    <div class="col-lg-6">
+
+    <form action="order" method="post">
+        Menu : <br/>
+        <div class="col-lg-10">Id : 005 | Nom : Item1 | Prix : 005 </div><br/>
+        <div class="col-lg-10">Quantité : <input type="number" value="0" name="005" required></div><br/>
+        
+    <div class="col-lg-10">
         Adresse de livraison :
         <select>
             <option value="altAdress">Adresse alternative</option>
@@ -52,16 +35,12 @@ $menuItemQty = array();
             <option value="secAdress"><?php echo $client->getSecAdress(); ?></option>
         </select>
     </div>
-</div>
-<div class="row">
   <div class="col-lg-6">
     <div class="input-group">
         <input id="adresseTextField" type="text" class="form-control" placeholder="Adresse alternative">
     </div><!-- /input-group -->
   </div><!-- /.col-lg-6 -->
 </div><!-- /.row -->
-<div class="btn">
-    <button   onclick="" class="btn btn-primary">Commander</button>
-</div>
-
-
+        <input type="submit" value="Commander" name="order_form">
+    </form>
+<?php }
