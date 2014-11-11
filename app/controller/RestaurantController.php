@@ -86,6 +86,42 @@ class RestaurantController extends Controller{
             Redirect::to('/restaurant');
         }
         
-        return View::render("restaurant/validateCommand.php", array('command' => $command));
+        //If we just put the date and time of the command
+        if(Form::exists('validate_command_form')){
+            $command->setDateTime(Form::get('datetime'));
+            
+            $command->createConfirmationCode();
+            $command->setStatus(Commande::COMMAND_STATUS_VALIDATED);
+            $command->save();
+            
+            
+            return View::render("restaurant/endCommand.php", array('command' => $command));
+        }
+        
+        $total = 0;
+        foreach($command->getItems() as $item){
+            $total += $item->quantity * $item->getPrice();
+        }
+        
+        $url = "https://api-3t.sandbox.paypal.com/nvp";
+        $url.= "?METHOD=SetExpressCheckout&VERSION=109.0";
+        $url.= "&USER=camille.hougron-facilitator_api1.gmail.com&PWD=1406519075&SIGNATURE=AFcWxV21C7fd0v3bYYYRCpSSRl31AuNKPdNYkjVrOZkal7ZEN8O5fX1K";
+        $url.= "&PAYMENTREQUEST_0_AMT=".$total.".00";
+        $url.= "&RETURNURL=http://localhost/log210/restaurant/validatePaypal/".$commandId;
+        $url.= "&CANCELURL=http://localhost/log210/restaurant/cancelPaypal/".$commandId;
+        $url.= "&PAYMENTREQUEST_0_PAYMENTACTION=Sale";
+        
+        $handle = fopen($url, "rb");
+        $contents = stream_get_contents($handle);
+        fclose($handle);
+        
+        $token = explode("&", $contents);
+        $token = $token[0];
+        $token = explode("=", $token);
+        $token = $token[1];
+        
+        $address = "https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_express-checkout&token=".$token;
+        
+        return View::render("restaurant/validateCommand.php", array('command' => $command, 'address' => $address));
     }
 }
