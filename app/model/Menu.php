@@ -19,16 +19,17 @@ class Menu extends Model
     protected $restaurant;
     
     /**
-     * The array returned is multidimentionnal. [0][0] returns the name of the
-     * first item and [0][1] returns its price.
-     * @return type
+     * Returns the Items of the menu
+     * @return MenuItems[]
      */
     public function getMenuItems(){
-        return $this->_menuItems;
+        $items = ItemMenu::getBy(array('_id' => array('$in' => $this->_menuItems)));
+        return $items;
     }
 
     /**
-     * @return Restaurateur
+     * Return the restaurant asociated
+     * @return Restaurant
      */
     public function getRestaurant()
     {
@@ -38,7 +39,7 @@ class Menu extends Model
 
     public function setRestaurant(Restaurant $restaurant)
     {
-        $this->restaurateur = $restaurant->getId();
+        $this->restaurant = $restaurant->getId();
     }
     
     /**
@@ -52,8 +53,8 @@ class Menu extends Model
         if(is_null($id)) return;
 
         //We search the $id and remove it if we find it
-        foreach($this->_menuItems as $key => $itemMenu){
-            if($id->__toString() == $itemMenu->__toString()){
+        foreach($this->_menuItems as $key => $idItemMenu){
+            if($id->__toString() == $idItemMenu->__toString()){
                 unset($this->_menuItems[$key]);
                 return;
             }
@@ -71,22 +72,24 @@ class Menu extends Model
         if(is_null($id)) return;
 
         //If the ItemMenu is already in the array, return
-        foreach($this->_menuItems as $menuItem){
-            if($id->__toString() == $menuItem->__toString()){
+        foreach($this->_menuItems as $idMenuItem){
+            if($id->__toString() == $idMenuItem->__toString()){
                 return;
             }
         }
 
-        $this->_menuItems[] = $menuItem;
+        $this->_menuItems[] = $id;
     }
 
+    /**
+     * Delete a Menu
+     */
     public function delete()
     {
-        //We get all the menuItems of the Menu, and remove the link
-        $menuItem = $this->getMenuItems();
-        if($menuItem){
-            $menuItem->removeMenu($this);
-            $menuItem->save();
+        //We get all the menuItems of the Menu, and remove them (an item doesn't exist without menu)
+        $menuItems = $this->getMenuItems();
+        foreach($menuItems as $menuItem){
+            $menuItem->delete();
         }
         parent::delete();
     }

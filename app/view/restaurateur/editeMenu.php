@@ -15,7 +15,7 @@
     </tr>
     </thead>
     <tbody>
-        <?php foreach($itemsMenu as $item): ?>
+        <?php foreach($restaurant->getMenu()->getMenuItems() as $item): ?>
         <tr>
             <td>
                 <?php echo $item->getName(); ?>
@@ -31,15 +31,15 @@
     </tbody>
 </table>
 <br />
-<form role="form" action="restaurateur/editeMenu/<?php echo $menu->getRestaurant()->getId(); ?>" method=""POST">
+<form role="form" action="restaurateur/editeMenu/<?php echo $restaurant->getId(); ?>" method="POST">
     <div class="form-group">
         <label for="name">Nom</label>
-        <input type="text" class="form-control" id="name" placeholder="Nom" >
+        <input type="text" class="form-control" name="name" id="name" placeholder="Nom" >
     </div>
 
     <div class="form-group">
         <label for="description">Description</label>
-        <textarea class="form-control" name="description" id="description" placeholder="Description">Description du plat</textarea>
+        <textarea class="form-control" name="description" id="description" placeholder="Description"></textarea>
     </div>
 
     <div class="form-group">

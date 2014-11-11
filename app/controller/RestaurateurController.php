@@ -59,14 +59,14 @@ class RestaurateurController extends Controller{
         }
 
         $restaurant = Restaurant::getOneBy(array('_id' => new \MongoId($id)));
-        if (!$restaurant->hasMenu()) {
+        $menu = $restaurant->getMenu();
+        if (!$menu) {
             $menu = new Menu();
             $menu->setRestaurant($restaurant);
+            $menu->save();
             $restaurant->setMenu($menu);
+            $restaurant->save();
         }
-
-        $itemMenu = ItemMenu::getOneBy(array('_id' => new \MongoId($id)));
-        $itemsMenu = ItemMenu::getBy(array());
 
         if (Form::exists('menu_edit_form'))
         {
@@ -75,24 +75,32 @@ class RestaurateurController extends Controller{
                     'error',
                     "Tous les champs ne sont pas remplis.");
                 $error = "Veuillez remplir tous les champs";
-                return View::render("restaurateur/editeMenu.php", array('itemsMenu' => $itemsMenu));
+                return View::render("restaurateur/editeMenu.php", array('error' => $error, 'restaurant' => $restaurant));
             }
 
             //We check if the name is not already taken
-            $found = ItemMenu::getOneBy(array('_name' => Form::get('name')));
-            if ($found && $found->getId() != $itemsMenu->getId()) {
+            $found = ItemMenu::getOneBy(array('_name' => Form::get('name'), 'menu' => new \MongoId($restaurant->getMenu()->getId())));
+            if ($found) {
                 Session::addFlashMessage("Erreur :",
                     'error',
                     "Nom déjà pris.");
-                $error = "Ce nom est déjà enregistrer dans le menu.";
-                return View::render("restaurateur/editeMenu.php", array('error' => $error, 'itemsMenu' => $itemsMenu));
+                $error = "Ce nom est déjà enregistré dans le menu.";
+                return View::render("restaurateur/editeMenu.php", array('error' => $error, 'restaurant' => $restaurant));
             }
 
             //We associate the values
+            $itemMenu = new ItemMenu();
             $itemMenu->setName(Form::get('name'));
             $itemMenu->setDescription(Form::get('description'));
+            $itemMenu->setPrice(Form::get('price'));
+            $itemMenu->setMenu($menu);
+            $itemMenu->save();
+            
+            
+            $menu->addItem($itemMenu);
+            $menu->save();
         }
 
-        return View::render("restaurateur/editeMenu.php", array('itemsMenu' => $itemsMenu));
+        return View::render("restaurateur/editeMenu.php", array('restaurant' => $restaurant));
     }
 }
