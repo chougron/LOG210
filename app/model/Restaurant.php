@@ -147,6 +147,10 @@ class Restaurant extends Model
             $restaurateur->removeRestaurant($this);
             $restaurateur->save();
         }
+        $menu = $this->getMenu();
+        if($menu){
+            $menu->delete();
+        }
         parent::delete();
     }
 }

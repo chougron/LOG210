@@ -9,6 +9,7 @@ use App\Component\Redirect;
 use App\Model\Menu;
 use App\Model\Restaurant;
 use App\Model\Restaurateur;
+use App\Model\ItemMenu;
 use App\Component\Form;
 
 class RestaurateurController extends Controller{
@@ -47,20 +48,59 @@ class RestaurateurController extends Controller{
     public function editeMenu($id = 0)
     {
         //If we are not connected as a Restaurateur, send to the login page
-        if(!Session::isConnected() || Session::getUser()->getType() != USER_RESTAURATEUR){
+        if (!Session::isConnected() || Session::getUser()->getType() != USER_RESTAURATEUR) {
             return Redirect::to('/restaurateur/login');
         }
 
         //If no restaurant is specified, display the list
-        if($id == 0){
+        if ($id == 0) {
             $restaurants = Restaurant::getBy(array());
             return View::render("restaurateur/listeEditeMenu.php", array('restaurants' => $restaurants));
         }
 
-        $restaurant = Restaurant::getOneBy(array('_id' => new \ MongoId($id)));
-        if(!$restaurant->hasMenu()){
+        $restaurant = Restaurant::getOneBy(array('_id' => new \MongoId($id)));
+        $menu = $restaurant->getMenu();
+        if (!$menu) {
             $menu = new Menu();
+            $menu->setRestaurant($restaurant);
+            $menu->save();
             $restaurant->setMenu($menu);
+            $restaurant->save();
         }
+
+        if (Form::exists('menu_edit_form'))
+        {
+            if(Form::checkEmpty(array('name', 'description', 'price'))){
+                Session::addFlashMessage("Erreur :",
+                    'error',
+                    "Tous les champs ne sont pas remplis.");
+                $error = "Veuillez remplir tous les champs";
+                return View::render("restaurateur/editeMenu.php", array('error' => $error, 'restaurant' => $restaurant));
+            }
+
+            //We check if the name is not already taken
+            $found = ItemMenu::getOneBy(array('_name' => Form::get('name'), 'menu' => new \MongoId($restaurant->getMenu()->getId())));
+            if ($found) {
+                Session::addFlashMessage("Erreur :",
+                    'error',
+                    "Nom déjà pris.");
+                $error = "Ce nom est déjà enregistré dans le menu.";
+                return View::render("restaurateur/editeMenu.php", array('error' => $error, 'restaurant' => $restaurant));
+            }
+
+            //We associate the values
+            $itemMenu = new ItemMenu();
+            $itemMenu->setName(Form::get('name'));
+            $itemMenu->setDescription(Form::get('description'));
+            $itemMenu->setPrice(Form::get('price'));
+            $itemMenu->setMenu($menu);
+            $itemMenu->save();
+            
+            
+            $menu->addItem($itemMenu);
+            $menu->save();
+        }
+
+        return View::render("restaurateur/editeMenu.php", array('restaurant' => $restaurant));
     }
 }
