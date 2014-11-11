@@ -81,7 +81,7 @@ class RestaurateurController extends Controller{
             }
             
             $description = Form::get('description');
-            if($description == "" || is_null($description)){
+            if($description == "" || is_null($description)){
                 Session::addFlashMessage("Attention :",
                     'warning',
                     "Vous n'avez pas rempli de description pour cet item.");
