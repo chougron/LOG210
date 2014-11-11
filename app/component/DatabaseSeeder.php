@@ -79,7 +79,7 @@ class DatabaseSeeder {
             $user->setFirstName("Jean");
             $user->setName("Bon");
             $user->setMail("client@test.com");
-            $user->setAdress($address);
+            $user->setAddress($address);
             $user->setBirthday("10 Janvier 1973");
             $user->setPhoneNumber("593 489 2354");  
             $user->setPassword("123123");
