@@ -12,6 +12,9 @@
         <th>
             Prix
         </th>
+        <th>
+            Supprimer
+        </th>
     </tr>
     </thead>
     <tbody>
@@ -25,6 +28,9 @@
             </td>
             <td>
                 <?php echo $item->getPrice(); ?>
+            </td>
+            <td>
+                <a href="restaurateur/doSupprimeItemMenu/<?php echo $item->getId();?>">Supprimer</a>
             </td>
         </tr>
         <?php endforeach; ?>
@@ -49,7 +55,7 @@
 
     <button type="submit" class="btn btn-default center-block" name="menu_edit_form">Ajouter</button>
 </form>
-<h5>Nom du menu</h5>
+<h4>Nom du menu</h4>
 <form role="form" action="restaurateur/editeMenu/<?php echo $restaurant->getId(); ?>" method="POST">
     <div class="form-group">
         <input text="text" class="form-control" name="menuName" id="menuName" placeholder="MenuName" value="<?php echo $restaurant->getMenu()->getName();?>" required>
