@@ -101,6 +101,29 @@ class RestaurateurController extends Controller{
             $menu->save();
         }
 
+        if(Form::exists('menu_name_edit_form'))
+        {
+            if(Form::checkEmpty(array('menuName'))){
+                Session::addFlashMessage("Erreur :",
+                    'error',
+                    "Tous les champs ne sont pas remplis.");
+                $error = "Veuillez indiquer un nom de menu";
+                return View::render("restaurateur/editeMenu.php", array('error' => $error, 'restaurant' => $restaurant));
+            }
+
+            $found = Menu::getOneBy(array('_name' => Form::get('menuName')));
+            if($found){
+                Session::addFlashMessage("Erreur :",
+                    'error',
+                    "Le nom n'a pas été modifié.");
+                $error = "Le nom n'a pas changé.";
+                return View::render("restaurateur/editeMenu.php", array('error' => $error, 'restaurant' => $restaurant));
+            }
+
+            $menu->setName(Form::get('menuName'));
+            $menu->save();
+        }
+
         return View::render("restaurateur/editeMenu.php", array('restaurant' => $restaurant));
     }
 }

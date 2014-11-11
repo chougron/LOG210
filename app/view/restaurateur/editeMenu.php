@@ -24,7 +24,7 @@
                 <?php echo $item->getDescription(); ?>
             </td>
             <td>
-                <?php echo $item->getPrice()/100; ?>
+                <?php echo $item->getPrice(); ?>
             </td>
         </tr>
         <?php endforeach; ?>
@@ -44,9 +44,16 @@
 
     <div class="form-group">
         <label for="price">Prix</label>
-        <input type="number" class="form-control" name="price" id="price" placeholder="Price">
+        <input type="text" class="form-control" name="price" id="price" placeholder="Price">
     </div>
 
     <button type="submit" class="btn btn-default center-block" name="menu_edit_form">Ajouter</button>
 </form>
+<h5>Nom du menu</h5>
+<form role="form" action="restaurateur/editeMenu/<?php echo $restaurant->getId(); ?>" method="POST">
+    <div class="form-group">
+        <input text="text" class="form-control" name="menuName" id="menuName" placeholder="MenuName" value="<?php echo $restaurant->getMenu()->getName();?>">
+    </div>
 
+    <button type="submit" class="btn btn-default center-block" name="menu_name_edit_form">Modifier</button>
+</form>
