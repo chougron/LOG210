@@ -7,7 +7,7 @@
 Unité : <?php echo $item->getPrice(); ?>$ | 
 <?php echo $item->quantity; ?>x | 
 <?php $_total = $item->getPrice() * $item->quantity; $total += $_total; ?>
-Total : <?php echo $_total ?>$
+Total : <?php echo $_total ?>$ <br/>
 <?php endif; ?>
 <?php endforeach; ?><br/><br/>
 
