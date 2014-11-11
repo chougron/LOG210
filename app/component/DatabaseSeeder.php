@@ -131,8 +131,6 @@ class DatabaseSeeder {
 
         $menu = new Menu();
         $menu->setRestaurant($restaurant);
-        $restaurant->setMenu($menu);
-        $restaurant->save();
 
         $menu->setName("Les suplices de la gueule");
         $menu->save();
@@ -155,12 +153,13 @@ class DatabaseSeeder {
         $menu->addItem($item2);
         $menu->save();
 
+        $restaurant->setMenu($menu);
+        $restaurant->save();
+        
         $restaurant = Restaurant::getOneBy(array('name' => 'Kitchen For Chinese'));
 
         $menu = new Menu();
         $menu->setRestaurant($restaurant);
-        $restaurant->setMenu($menu);
-        $restaurant->save();
 
         $menu->setName("Les plaisirs du palais");
         $menu->save();
@@ -173,6 +172,8 @@ class DatabaseSeeder {
 
         $menu->addItem($item1);
         $menu->save();
+        $restaurant->setMenu($menu);
+        $restaurant->save();
 
         $item2 = new ItemMenu();
         $item2->setName("Pâté chinois");
@@ -183,5 +184,7 @@ class DatabaseSeeder {
         $menu->addItem($item2);
         $menu->save();
 
+        $restaurant->setMenu($menu);
+        $restaurant->save();
     }
 }
