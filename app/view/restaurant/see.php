@@ -1,13 +1,8 @@
 <h2><?php echo $restaurant->getName(); ?></h2>
 <?php
-echo $restaurant->getDescription();
-$menuItems = array(
-    array("item1", "5.50"),
-    array("item2", "5.51"),
-    array("item3", "5.52"),
-    array("item4", "5.53"));
+echo $restaurant->getDescription();;
 if($restaurant->hasMenu()){
-    $menuItemsTest = $restaurant->getMenu()->getMenuItems();  
+    $menuItems = $restaurant->getMenu()->getMenuItems();  
     echo "got menu.";
     
      foreach ($menuItems as $menuItem): ?> 
@@ -46,28 +41,27 @@ $menuItemQty = array();
 
 </div>
 <div class="btn">
-    <button   onclick="addToOrder()" class="btn btn-primary">Rafraîchir la commande</button>
+    <button   onclick="" class="btn btn-primary">Rafraîchir la commande</button>
+</div>
+<div class="row">
+    <div class="col-lg-6">
+        Adresse de livraison :
+        <select>
+            <option value="altAdress">Adresse alternative</option>
+            <option value="primaryAdress" selected><?php echo $client->getAdress(); ?></option>
+            <option value="secAdress"><?php echo $client->getSecAdress(); ?></option>
+        </select>
+    </div>
 </div>
 <div class="row">
   <div class="col-lg-6">
     <div class="input-group">
-      <input type="text" class="form-control">
-      <div class="input-group-btn">
-        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Action <span class="caret"></span></button>
-        <ul class="dropdown-menu dropdown-menu-right" role="menu">
-          <li><a href="#">Action</a></li>
-          <li><a href="#">Another action</a></li>
-          <li><a href="#">Something else here</a></li>
-          <li class="divider"></li>
-          <li><a href="#">Separated link</a></li>
-        </ul>
-      </div><!-- /btn-group -->
+        <input id="adresseTextField" type="text" class="form-control" placeholder="Adresse alternative">
     </div><!-- /input-group -->
   </div><!-- /.col-lg-6 -->
 </div><!-- /.row -->
 <div class="btn">
-    <button   onclick="processOrder()" class="btn btn-primary">Commander</button>
+    <button   onclick="" class="btn btn-primary">Commander</button>
 </div>
-
 
 
