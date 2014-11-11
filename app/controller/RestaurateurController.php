@@ -70,16 +70,23 @@ class RestaurateurController extends Controller{
 
         if (Form::exists('menu_edit_form'))
         {
-            if(Form::checkEmpty(array('name', 'description', 'price'))){
+            if(Form::checkEmpty(array('name', 'price'))){
                 Session::addFlashMessage("Erreur :",
                     'error',
                     "Tous les champs ne sont pas remplis.");
                 $error = "Veuillez remplir tous les champs";
                 return View::render("restaurateur/editeMenu.php", array('error' => $error, 'restaurant' => $restaurant));
             }
+            
+            $description = Form::get('description');
+            if($description == "" || is_null($description)){
+                Session::addFlashMessage("Attention :",
+                    'warning',
+                    "Vous n'avez pas rempli de description pour cet item.");
+            }
 
             //We check if the name is not already taken
-            $found = ItemMenu::getBy(array('name' => Form::get('name')));
+            $found = ItemMenu::getBy(array('name' => Form::get('name'), 'menu' => $menu->getId()));
             if ($found) {
                 Session::addFlashMessage("Erreur :",
                     'error',
