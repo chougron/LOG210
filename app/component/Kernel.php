@@ -25,7 +25,11 @@ class Kernel {
             require_once $path;
         }
         //Load the models
+<<<<<<< HEAD
         $models = array('User', 'Client', 'Entrepreneur', 'Restaurant', 'Restaurateur', 'Test', 'Commande');
+=======
+        $models = array('User', 'Client', 'Entrepreneur', 'Restaurant', 'Restaurateur', 'Test', 'ItemMenu', 'Menu');
+>>>>>>> Modified the RestaurateurController file to edite a menu. Modified the editeMenu web page, a form has been added but it's not working yet.
         foreach($models as $model){
             $path = ROOT . '/app/model/' . $model . '.php';
             require_once $path;

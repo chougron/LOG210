@@ -1,9 +1,11 @@
 <?php
 
-
 namespace App\Model;
 
-use App\Model\Model;
+use App\Component\Model;
+use App\Model\Menu;
+
+define('ITEM_ITEMMENU', "ItemMenu");
 
 class ItemMenu extends Model
 {
@@ -15,6 +17,7 @@ class ItemMenu extends Model
 
     /**
      * The price of the item
+     * The price is save in cents
      * @var Int
      */
     protected $price;
@@ -65,6 +68,16 @@ class ItemMenu extends Model
     public function getPrice()
     {
         return $this->price;
+    }
+
+    public function setDescription($description)
+    {
+        $this->description = $description;
+    }
+
+    public function getDescription()
+    {
+        return $this->description;
     }
 
     /**
