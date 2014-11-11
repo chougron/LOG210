@@ -15,6 +15,12 @@ class Menu extends Model
      * @var String
      */
     protected $restaurant;
+
+    /**
+     * The name of the menu
+     * @var String
+     */
+    protected $name;
     
     /**
      * Returns the Items of the menu
@@ -26,7 +32,7 @@ class Menu extends Model
     }
 
     /**
-     * Return the restaurant asociated
+     * Return the restaurant associated
      * @return Restaurant
      */
     public function getRestaurant()
@@ -35,9 +41,31 @@ class Menu extends Model
         return $restaurant;
     }
 
+    /**
+     * Set the id of the Restaurant associated
+     * @param Restaurant $restaurant
+     */
     public function setRestaurant(Restaurant $restaurant)
     {
         $this->restaurant = $restaurant->getId();
+    }
+
+    /**
+     * Get the name of the menu
+     * @return String
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Set the name of the menu
+     * @param String $name
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
     }
     
     /**

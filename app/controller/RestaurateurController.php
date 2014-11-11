@@ -79,11 +79,11 @@ class RestaurateurController extends Controller{
             }
 
             //We check if the name is not already taken
-            $found = ItemMenu::getOneBy(array('_name' => Form::get('name'), 'menu' => new \MongoId($restaurant->getMenu()->getId())));
+            $found = ItemMenu::getBy(array('name' => Form::get('name')));
             if ($found) {
                 Session::addFlashMessage("Erreur :",
                     'error',
-                    "Nom déjà pris.");
+                    "Le nom déjà pris.");
                 $error = "Ce nom est déjà enregistré dans le menu.";
                 return View::render("restaurateur/editeMenu.php", array('error' => $error, 'restaurant' => $restaurant));
             }
@@ -101,6 +101,53 @@ class RestaurateurController extends Controller{
             $menu->save();
         }
 
+        if(Form::exists('menu_name_edit_form'))
+        {
+            if(Form::checkEmpty(array('menuName'))){
+                Session::addFlashMessage("Erreur :",
+                    'error',
+                    "Tous les champs ne sont pas remplis.");
+                $error = "Veuillez indiquer un nom de menu";
+                return View::render("restaurateur/editeMenu.php", array('error' => $error, 'restaurant' => $restaurant));
+            }
+
+            if($menu->getName()==Form::get('menuName')){
+                Session::addFlashMessage("Erreur :",
+                    'error',
+                    "Le nom n'a pas été modifié.");
+                $error = "Le nom n'a pas changé.";
+                return View::render("restaurateur/editeMenu.php", array('error' => $error, 'restaurant' => $restaurant));
+            }
+
+            $menu->setName(Form::get('menuName'));
+            $menu->save();
+        }
+
         return View::render("restaurateur/editeMenu.php", array('restaurant' => $restaurant));
+    }
+
+    public function doSupprimeItemMenu($id)
+    {
+        //If we are not connected as an entrepreneur, send to the login page
+        if(!Session::isConnected() || Session::getUser()->getType() != USER_RESTAURATEUR){
+            Redirect::to('/restaurateur/login/');
+        }
+
+        $itemMenu = ItemMenu::getOneBy(array('_id' => new \MongoId($id)));
+        $restaurant = $itemMenu->getMenu()->getRestaurant();
+
+        if(!$itemMenu){
+            //If the restaurateur doesn't exist, we redirect to the list
+            Session::addFlashMessage("Suppression impossible :",
+                'error',
+                "Cet item n'existe pas.");
+            Redirect::to("/restaurateur/editeMenu/".$restaurant->getId());
+        }
+        //Then we delete the restaurateur
+        $itemMenu->delete();
+        Session::addFlashMessage("Item supprimé",
+            'success',
+            "L'item a été supprimé avec succès.");
+        Redirect::to("/restaurateur/editeMenu/".$restaurant->getId());
     }
 }
