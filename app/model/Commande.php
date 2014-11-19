@@ -16,6 +16,7 @@ class Commande extends Model
     protected $_confirmation;
     protected $_datetime;
     protected $_status;
+    protected $_price;
 
 
     public function setClient(Client $client){
@@ -89,6 +90,14 @@ class Commande extends Model
 
     function setStatus($status) {
         $this->_status = $status;
+    }
+    
+    function setPrice($price){
+        $this->_price = $price;
+    }
+    
+    function getPrice(){
+        return $this->_price;
     }
 
 

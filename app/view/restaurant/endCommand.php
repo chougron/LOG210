@@ -15,4 +15,6 @@ Items : <br/><br/>
     ?> - <?php echo $item->getName(); ?><br/>&nbsp;&nbsp;&nbsp;&nbsp;Quantité : <?php echo $item->quantity;?> <br/> <?php
 } ?><br/>
 
+Prix : <?php echo $command->getPrice(); ?><br/><br/>
+
 Un mail contenant les informations de la commande vous a été envoyé.

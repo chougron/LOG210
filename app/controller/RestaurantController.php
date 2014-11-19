@@ -54,7 +54,6 @@ class RestaurantController extends Controller{
                 $address = new Address();
                 $address->setAddress(Form::get('altAdress'));
                 $address->setUser($client);
-                $address->save();
             } else {
                 $address = Address::getOneBy(array('_id' => new \MongoId($addressId)));
                 if(!$address){
@@ -62,6 +61,8 @@ class RestaurantController extends Controller{
                     //TODO: ERROR
                 }
             }
+            $address->setByDefault();
+            $address->save();
             
             $commande->setAddress($address);
             $commande->setStatus(Commande::COMMAND_STATUS_TEMPORARY);
@@ -92,7 +93,7 @@ class RestaurantController extends Controller{
             
             $command->createConfirmationCode();
             $command->setStatus(Commande::COMMAND_STATUS_VALIDATED);
-            $command->save();
+            
             
             
             return View::render("restaurant/endCommand.php", array('command' => $command));
@@ -102,6 +103,8 @@ class RestaurantController extends Controller{
         foreach($command->getItems() as $item){
             $total += $item->quantity * $item->getPrice();
         }
+        $command->setPrice($total);
+        $command->save();
         
         $url = "https://api-3t.paypal.com/nvp";
         $url.= "?METHOD=SetExpressCheckout&VERSION=109.0";

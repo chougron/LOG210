@@ -17,7 +17,7 @@ if ($restaurant->hasMenu()):
                 Adresse de livraison :
                 <select name="address" class="form-control" required>
                     <?php foreach ($addresses as $address): ?>
-                        <option value="<?php echo $address->getId(); ?>"><?php echo $address->getAddress(); ?></option>
+                        <option value="<?php echo $address->getId(); ?>"<?php if($address->getByDefault()){ ?> selected <?php } ?> ><?php echo $address->getAddress(); ?></option>
                     <?php endforeach; ?>
                     <option value="altAddress">Adresse alternative</option>
                 </select>
