@@ -154,7 +154,7 @@ class DatabaseSeeder {
             $menu->addItem($item2);
             $menu->save();
 
-            $restaurant->setMenu($menu);
+            $restaurant->addMenu($menu);
             $restaurant->save();
         }
         
@@ -175,7 +175,7 @@ class DatabaseSeeder {
 
             $menu->addItem($item1);
             $menu->save();
-            $restaurant->setMenu($menu);
+            $restaurant->addMenu($menu);
             $restaurant->save();
 
             $item2 = new ItemMenu();
@@ -187,7 +187,7 @@ class DatabaseSeeder {
             $menu->addItem($item2);
             $menu->save();
 
-            $restaurant->setMenu($menu);
+            $restaurant->addMenu($menu);
             $restaurant->save();
         }
     }

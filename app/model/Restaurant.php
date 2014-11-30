@@ -24,7 +24,7 @@ class Restaurant extends Model
      * The id of the associated Menu
      * @var String
      */
-    protected $menu;
+    protected $_menu = array();
 
     /**
      * The description of the Restaurant
@@ -82,21 +82,51 @@ class Restaurant extends Model
      */
     public function getMenu()
     {
-        return Menu::getOneBy(array('_id' => $this->menu));
+        $menus = Menu::getBy(array('_id' => array('$in' => $this->_menu)));
+        return $menus;
     }
 
     /**
-     * Set the associated Menu
-     * @param \App\Model\Menu $menu
+     * Erases the menu
+     * @param Menu $menu
      */
-    public function setMenu(Menu $menu)
+    public function removeMenu(Menu $menu)
     {
-        $this->menu = $menu->getId();
+        $id = $menu->getId();
+        //If the object doesn't have an id, return
+        if(is_null($id)) return;
+
+        //We search he $id and remove it if we find it
+        foreach($this->_menu as $key => $idMenu){
+            if($id->__toString() == $idMenu->__toString()){
+                unset($this->_menu[$key]);
+                return;
+            }
+        }
+    }
+
+    /**
+     * Adds the menu to the array
+     * @param Menu $menu
+     */
+    public function addMenu(Menu $menu)
+    {
+        $id = $menu->getId();
+        //If the object doesn't have an id, return
+        if(is_null($id)) return;
+
+        //If the Menu is already in the array, return
+        foreach($this->_menu as $idMenu){
+            if($id->__toString() == $idMenu->__toString()){
+                return;
+            }
+        }
+        $this->_menu[] = $id;
     }
 
     public function hasMenu()
     {
-        return $this->menu != null;
+        return $this->_menu != null;
     }
     
     /**

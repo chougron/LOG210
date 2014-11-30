@@ -45,6 +45,22 @@ class RestaurateurController extends Controller{
         return View::render("restaurateur/login.php");
     }
 
+    public function selectRestaurant($id = 0){
+        //If we are not connected as a Restaurateur, send to the login page
+        if (!Session::isConnected() || Session::getUser()->getType() != USER_RESTAURATEUR) {
+            return Redirect::to('/restaurateur/login');
+        }
+
+        //If no restaurant is specified, display the list
+        if ($id == 0) {
+            $restaurants = Restaurant::getBy(array());
+            return View::render("restaurateur/listeSelectRestaurant.php", array('restaurants' => $restaurants));
+        }
+
+        $menus = Restaurant::getMenu();
+        return View::render("restaurateur/listeEditeMenu.php", array('menus' => $menus));
+    }
+
     public function editeMenu($id = 0)
     {
         //If we are not connected as a Restaurateur, send to the login page
@@ -55,7 +71,7 @@ class RestaurateurController extends Controller{
         //If no restaurant is specified, display the list
         if ($id == 0) {
             $restaurants = Restaurant::getBy(array());
-            return View::render("restaurateur/listeEditeMenu.php", array('restaurants' => $restaurants));
+            return View::render("restaurateur/listeSelectRestaurant.php", array('restaurants' => $restaurants));
         }
 
         $restaurant = Restaurant::getOneBy(array('_id' => new \MongoId($id)));

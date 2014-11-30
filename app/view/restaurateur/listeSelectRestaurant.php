@@ -6,11 +6,11 @@
         <th>Éditer</th>
     </thead>
     <tbody>
-        <?php foreach($menus as $menu):?>
+        <?php foreach($restaurants as $restaurant):?>
         <tr>
-            <td><?php echo $menu->getName();?></td>
+            <td><?php echo $restaurant->getName();?></td>
             <td>
-                <a href="restaurateur/editeMenu/<?php echo $menu->getId();?>">Éditer</a>
+                <a href="restaurateur/selectRestaurant/<?php echo $restaurant->getId();?>">Sélectionner</a>
             </td>
         </tr>
     <?php endforeach; ?>
