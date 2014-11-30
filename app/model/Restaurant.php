@@ -24,7 +24,7 @@ class Restaurant extends Model
      * The id of the associated Menu
      * @var String
      */
-    protected $_menu = array();
+    protected $_menus = array();
 
     /**
      * The description of the Restaurant
@@ -80,9 +80,10 @@ class Restaurant extends Model
      * Return the associated Menu
      * @return \App\Model\Menu
      */
-    public function getMenu()
+    public function getMenus()
     {
-        $menus = Menu::getBy(array('_id' => array('$in' => $this->_menu)));
+        $test = $this->_menus;
+        $menus = Menu::getBy(array('_id' => array('$in' => $test)));
         return $menus;
     }
 
@@ -97,9 +98,9 @@ class Restaurant extends Model
         if(is_null($id)) return;
 
         //We search he $id and remove it if we find it
-        foreach($this->_menu as $key => $idMenu){
+        foreach($this->_menus as $key => $idMenu){
             if($id->__toString() == $idMenu->__toString()){
-                unset($this->_menu[$key]);
+                unset($this->_menus[$key]);
                 return;
             }
         }
@@ -116,17 +117,17 @@ class Restaurant extends Model
         if(is_null($id)) return;
 
         //If the Menu is already in the array, return
-        foreach($this->_menu as $idMenu){
+        foreach($this->_menus as $idMenu){
             if($id->__toString() == $idMenu->__toString()){
                 return;
             }
         }
-        $this->_menu[] = $id;
+        $this->_menus[] = $id;
     }
 
     public function hasMenu()
     {
-        return $this->_menu != null;
+        return $this->_menus != null;
     }
     
     /**
@@ -177,7 +178,7 @@ class Restaurant extends Model
             $restaurateur->removeRestaurant($this);
             $restaurateur->save();
         }
-        $menu = $this->getMenu();
+        $menu = $this->getMenus();
         if($menu){
             $menu->delete();
         }

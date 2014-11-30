@@ -18,7 +18,7 @@
     </tr>
     </thead>
     <tbody>
-        <?php foreach($restaurant->getMenu()->getMenuItems() as $item): ?>
+        <?php foreach($menu->getMenuItems() as $item): ?>
         <tr>
             <td>
                 <?php echo $item->getName(); ?>
@@ -37,7 +37,7 @@
     </tbody>
 </table>
 <br />
-<form role="form" action="restaurateur/editeMenu/<?php echo $restaurant->getId(); ?>" method="POST">
+<form role="form" action="restaurateur/editeMenu/<?php echo $menu->getId(); ?>" method="POST">
     <div class="form-group">
         <label for="name">Nom</label>
         <input type="text" class="form-control" name="name" id="name" placeholder="Nom" required>
@@ -56,9 +56,9 @@
     <button type="submit" class="btn btn-default center-block" name="menu_edit_form">Ajouter</button>
 </form>
 <h4>Nom du menu</h4>
-<form role="form" action="restaurateur/editeMenu/<?php echo $restaurant->getId(); ?>" method="POST">
+<form role="form" action="restaurateur/editeMenu/<?php echo $menu->getId(); ?>" method="POST">
     <div class="form-group">
-        <input text="text" class="form-control" name="menuName" id="menuName" placeholder="MenuName" value="<?php echo $restaurant->getMenu()->getName();?>" required>
+        <input text="text" class="form-control" name="menuName" id="menuName" placeholder="MenuName" value="<?php echo $menu->getName();?>" required>
     </div>
 
     <button type="submit" class="btn btn-default center-block" name="menu_name_edit_form">Modifier</button>

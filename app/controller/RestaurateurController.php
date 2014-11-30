@@ -57,7 +57,8 @@ class RestaurateurController extends Controller{
             return View::render("restaurateur/listeSelectRestaurant.php", array('restaurants' => $restaurants));
         }
 
-        $menus = Restaurant::getMenu();
+        $restaurant = Restaurant::getOneBy(array('_id' => new \MongoId($id)));
+        $menus = $restaurant->getMenus();
         return View::render("restaurateur/listeEditeMenu.php", array('menus' => $menus));
     }
 
@@ -74,15 +75,7 @@ class RestaurateurController extends Controller{
             return View::render("restaurateur/listeSelectRestaurant.php", array('restaurants' => $restaurants));
         }
 
-        $restaurant = Restaurant::getOneBy(array('_id' => new \MongoId($id)));
-        $menu = $restaurant->getMenu();
-        if (!$menu) {
-            $menu = new Menu();
-            $menu->setRestaurant($restaurant);
-            $menu->save();
-            $restaurant->setMenu($menu);
-            $restaurant->save();
-        }
+        $menu = Menu::getOneBy(array('_id' => new \MongoId($id)));
 
         if (Form::exists('menu_edit_form'))
         {
@@ -93,7 +86,7 @@ class RestaurateurController extends Controller{
                     'error',
                     "Tous les champs ne sont pas remplis.");
                 $error = "Veuillez remplir tous les champs";
-                return View::render("restaurateur/editeMenu.php", array('error' => $error, 'restaurant' => $restaurant));
+                return View::render("restaurateur/editeMenu.php", array('error' => $error, 'menu' => $menu));
             }
             
             $description = Form::get('description');
@@ -110,7 +103,7 @@ class RestaurateurController extends Controller{
                     'error',
                     "Le nom déjà pris.");
                 $error = "Ce nom est déjà enregistré dans le menu.";
-                return View::render("restaurateur/editeMenu.php", array('error' => $error, 'restaurant' => $restaurant));
+                return View::render("restaurateur/editeMenu.php", array('error' => $error, 'menu' => $menu));
             }
 
             //We associate the values
@@ -133,7 +126,7 @@ class RestaurateurController extends Controller{
                     'error',
                     "Tous les champs ne sont pas remplis.");
                 $error = "Veuillez indiquer un nom de menu";
-                return View::render("restaurateur/editeMenu.php", array('error' => $error, 'restaurant' => $restaurant));
+                return View::render("restaurateur/editeMenu.php", array('error' => $error, 'menu' => $menu));
             }
 
             if($menu->getName()==Form::get('menuName')){
@@ -141,14 +134,14 @@ class RestaurateurController extends Controller{
                     'error',
                     "Le nom n'a pas été modifié.");
                 $error = "Le nom n'a pas changé.";
-                return View::render("restaurateur/editeMenu.php", array('error' => $error, 'restaurant' => $restaurant));
+                return View::render("restaurateur/editeMenu.php", array('error' => $error, 'menu' => $menu));
             }
 
             $menu->setName(Form::get('menuName'));
             $menu->save();
         }
 
-        return View::render("restaurateur/editeMenu.php", array('restaurant' => $restaurant));
+        return View::render("restaurateur/editeMenu.php", array('menu' => $menu));
     }
 
     public function doSupprimeItemMenu($id)
@@ -159,20 +152,20 @@ class RestaurateurController extends Controller{
         }
 
         $itemMenu = ItemMenu::getOneBy(array('_id' => new \MongoId($id)));
-        $restaurant = $itemMenu->getMenu()->getRestaurant();
+        $menu = $itemMenu->getMenu();
 
         if(!$itemMenu){
             //If the restaurateur doesn't exist, we redirect to the list
             Session::addFlashMessage("Suppression impossible :",
                 'error',
                 "Cet item n'existe pas.");
-            Redirect::to("/restaurateur/editeMenu/".$restaurant->getId());
+            Redirect::to("/restaurateur/editeMenu/".$menu->getId());
         }
         //Then we delete the restaurateur
         $itemMenu->delete();
         Session::addFlashMessage("Item supprimé",
             'success',
             "L'item a été supprimé avec succès.");
-        Redirect::to("/restaurateur/editeMenu/".$restaurant->getId());
+        Redirect::to("/restaurateur/editeMenu/".$menu->getId());
     }
 }
