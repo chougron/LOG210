@@ -39,12 +39,16 @@ class RestaurantController extends Controller{
         
         if(Form::exists('order_form')){
             $commande = new Commande();
-            $menuItems = $restaurant->getMenu()->getMenuItems();
-            
-            foreach ($menuItems as $menuItem):
-                $quantity = Form::get($menuItem->getId()->__toString());
-                $commande->setItem($menuItem, $quantity);
-            endforeach;
+            $menus = $restaurant->getMenus();
+
+            foreach ($menus as $menu) {
+                $menuItems = $menu->getMenuItems();
+
+                foreach ($menuItems as $menuItem):
+                    $quantity = Form::get($menuItem->getId()->__toString());
+                    $commande->setItem($menuItem, $quantity);
+                endforeach;
+            }
             
             $commande->setClient($client);
             

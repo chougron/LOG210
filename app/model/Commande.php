@@ -9,6 +9,7 @@ class Commande extends Model
     const COMMAND_STATUS_TEMPORARY = 0;
     const COMMAND_STATUS_VALIDATED = 1;
     const COMMAND_STATUS_PAYED = 2;
+    const COMMAND_STATUS_PREPARED = 3;
 
     protected $_client;
     protected $_menuItems;
