@@ -82,8 +82,7 @@ class Restaurant extends Model
      */
     public function getMenus()
     {
-        $test = $this->_menus;
-        $menus = Menu::getBy(array('_id' => array('$in' => $test)));
+        $menus = Menu::getBy(array('_id' => array('$in' => $this->_menus)));
         return $menus;
     }
 

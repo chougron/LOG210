@@ -59,7 +59,42 @@ class RestaurateurController extends Controller{
 
         $restaurant = Restaurant::getOneBy(array('_id' => new \MongoId($id)));
         $menus = $restaurant->getMenus();
-        return View::render("restaurateur/listeEditeMenu.php", array('menus' => $menus));
+
+        if (Form::exists('menu_edit_form'))
+        {
+            $name = Form::get('name');
+            if($name == "" || is_null($name)){
+                Session::addFlashMessage("Erreur :",
+                    'error',
+                    "Tous les champs ne sont pas remplis.");
+                $error = "Veuillez remplir tous les champs";
+                return View::render("restaurateur/listeEditeMenu.php", array('error' => $error, 'restaurant' => $restaurant, 'menus' => $menus));
+            }
+
+            //We check if the name is not already taken
+            $found = Menu::getBy(array('name' => Form::get('name'), 'restaurant' => $restaurant->getId()));
+            if ($found) {
+                Session::addFlashMessage("Erreur :",
+                    'error',
+                    "Le nom déjà pris.");
+                $error = "Ce nom est déjà enregistré dans le menu.";
+                return View::render("restaurateur/listeEditeMenu.php", array('error' => $error, 'restaurant' => $restaurant, 'menus' => $menus));
+            }
+
+            //We associate the values
+            $menu = new Menu();
+            $menu->setName(Form::get('name'));
+            $menu->setRestaurant($restaurant);
+            $menu->save();
+
+
+            $restaurant->addMenu($menu);
+            $restaurant->save();
+        }
+
+        $menus = $restaurant->getMenus();
+
+        return View::render("restaurateur/listeEditeMenu.php", array('menus' => $menus, 'restaurant' => $restaurant));
     }
 
     public function editeMenu($id = 0)

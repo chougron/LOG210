@@ -17,6 +17,11 @@
     </tbody>
 </table>
 
-<?php if(isset($error)):?>
-    Erreur : <?php echo $error; ?>
-<?php endif; ?>
+<form role="form" action="restaurateur/selectRestaurant/<?php echo $restaurant->getId(); ?>" method="POST">
+    <div class="form-group">
+        <label for="name">Nom</label>
+        <input type="text" class="form-control" name="name" id="name" placeholder="Nom" required>
+    </div>
+
+    <button type="submit" class="btn btn-default center-block" name="menu_edit_form">Ajouter</button>
+</form>
