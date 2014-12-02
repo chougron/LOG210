@@ -21,7 +21,7 @@ class DatabaseSeeder {
         $this->addUsers();
         $this->associateRestaurants();
         $this->addMenu();
-        //$this->addCommande();
+        $this->addCommande();
     }
     
     /**
@@ -202,15 +202,13 @@ class DatabaseSeeder {
             $commande = new Commande();
             $restaurant = Restaurant::getOneBy(array('name' => 'Ma Queue Mickey'));
             $item = ItemMenu::getOneBy(array('name' => 'Burger'));
-            $restaurateur = Restaurateur::getOneBy(array('_id' => $restaurant->getRestaurateur()->getId()));
 
             $commande->setItem($item, 2);
             $commande->setStatus(Commande::COMMAND_STATUS_PAYED);
             $commande->setDatetime('12/12/12 12:12');
             $commande->createConfirmationCode();
             $commande->save();
-
-            $restaurateur->addCommande($commande);
+            
             $restaurant->save();
 
             $commandes = Commande::getBy(array());

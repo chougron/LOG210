@@ -10,7 +10,7 @@ use App\Model\Commande;
 use App\Component\Form;
 use App\Component\Session;
 use App\Model\Address;
-use App\Model\Restaurateur;
+use App\Component\MailSender;
 
 class RestaurantController extends Controller{
     
@@ -49,7 +49,9 @@ class RestaurantController extends Controller{
                 
                 foreach ($menuItems as $menuItem):
                     $quantity = Form::get($menuItem->getId()->__toString());
-                    $commande->setItem($menuItem, $quantity);
+                    if($quantity > 0){
+                        $commande->setItem($menuItem, $quantity);
+                    }
                     
                     $total += $menuItem->getPrice() * $quantity;
                 endforeach;
@@ -131,7 +133,7 @@ class RestaurantController extends Controller{
         $command->createConfirmationCode();
         $command->save();
         
-        $this->sendConfirmationMail($command);
+        MailSender::sendConfirmationMail($command);
         
         return View::render("restaurant/endCommand.php", array('command' => $command));
     }
