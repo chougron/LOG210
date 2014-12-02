@@ -27,7 +27,7 @@ if ($restaurant->hasMenu()):
                     <?php var_dump(\App\Component\Session::getUser()); ?>
                      */?>
                     <?php foreach ($addresses as $address): ?>
-                    <option value="<?php echo $address->getId(); ?>" <?php if($address->getId() == $mainAddress->getId()): ?> selected<?php endif; ?>>
+                    <option value="<?php echo $address->getId(); ?>" <?php if($address->getByDefault()): ?> selected<?php endif; ?>>
                         <?php echo $address->getAddress(); ?>
                     </option>
                     <?php endforeach; ?>

@@ -31,6 +31,7 @@ class Address extends Model
         $addresses = Address::getBy(array('user' => $this->user));     //Need to get User
         foreach ($addresses as $address):
             $address->removeByDefault();
+            $address->save();
         endforeach;
         $this->defaultAddress = TRUE;
     }

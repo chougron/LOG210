@@ -1,4 +1,4 @@
-<h3>Éditer le menu d'un restaurant</h3>
+<h3>Éditer un menu</h3>
 
 <table class="table table-striped table-bordered">
     <thead>
