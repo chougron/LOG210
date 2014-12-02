@@ -94,6 +94,7 @@ class LivreurController extends Controller{
         }
         
         $commande->setLivreur(Session::getUser());
+        $commande->setTimeAcceptation(time());
         $commande->save();
         
         return Redirect::to('/livreur/commande/'.$idCommande);

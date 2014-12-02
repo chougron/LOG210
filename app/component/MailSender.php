@@ -3,6 +3,8 @@
 namespace App\Component;
 
 use App\Model\Commande;
+use PHPMailer;
+use SMTP;
 
 class MailSender {
     
@@ -26,11 +28,24 @@ class MailSender {
         
         $destinataire = $command->getClient()->getMail();
         
-        ini_set("SMTP", "aspmx.l.google.com");
-        ini_set("sendmail_from", "camille.hougron@gmail.com");
-        
-        $headers = "From: YOURMAIL@gmail.com";
-        
-        mail("camille.hougron@gmail.com", $objet, $message, $headers);
+        $mail = new PHPMailer;
+        $mail->isSMTP();
+        $mail->Host = 'smtp.gmail.com';
+        $mail->SMTPAuth = true;
+        $mail->Username = 'log210.3@gmail.com';
+        $mail->Password = 'YvanRoss';
+        $mail->SMTPSecure = 'ssl';
+        $mail->Port = 465;
+        $mail->From = 'log210.3@gmail.com';
+        $mail->FromName = 'LOG 210';
+        $mail->addAddress('camille.hougron@gmail.com', 'Camille Hougron');
+        $mail->addReplyTo('log210.3@gmail.com', 'LOG 210');
+        $mail->WordWrap = 50;
+        $mail->isHTML(true);
+        $mail->Subject = $objet;
+        $mail->Body    = $message;
+        if(!$mail->send()) {
+           exit;
+        }
     }
 }

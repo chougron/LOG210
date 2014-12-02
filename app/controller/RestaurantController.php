@@ -28,11 +28,11 @@ class RestaurantController extends Controller{
         //If User is not logged in
         if(!Session::isConnected() || Session::getUser()->getType() != USER_CLIENT){
             Session::addFlashMessage("Non connecté", "error", "Veuillez vous connecter avant de continuer.");
-            Redirect::to('/restaurant');
+            return Redirect::to('/restaurant');
         }
         //If it doesn't exist, return to the list
         if(!$restaurant){
-            Redirect::to('/restaurant');
+            return Redirect::to('/restaurant');
         }
         
         $client = Session::getUser();
@@ -55,6 +55,11 @@ class RestaurantController extends Controller{
                     
                     $total += $menuItem->getPrice() * $quantity;
                 endforeach;
+            }   
+            
+            //If we didn't choose any item
+            if($total == 0){
+                return Redirect::to('/restaurant/see/'.$idRestaurant);
             }
             
             $commande->setPrice($total);

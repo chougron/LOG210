@@ -21,6 +21,7 @@ class Commande extends Model
     protected $_status;
     protected $_price;
     protected $_livreur;
+    protected $_timeAcceptation;
 
     /**
      * Set the Client associated to the Commande
@@ -164,5 +165,13 @@ class Commande extends Model
      */
     function getLivreur() {
         return Livreur::getOneBy(array('_id' => $this->_livreur));
+    }
+    
+    function getTimeAcceptation() {
+        return $this->_timeAcceptation;
+    }
+
+    function setTimeAcceptation($timeAcceptation) {
+        $this->_timeAcceptation = $timeAcceptation;
     }
 }

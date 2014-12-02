@@ -11,6 +11,12 @@
             <td>Date et heure :</td>
             <td><?php echo $commande->getDatetime(); ?></td>
         </tr>
+        <?php if($commande->getTimeAcceptation()): ?>
+        <tr>
+            <td>Date et heure : (acceptation)</td>
+            <td><?php echo date( "d/m/Y H:i", $commande->getTimeAcceptation() ) ?></td>
+        </tr>
+        <?php endif; ?>
         <tr>
             <td>Items commandés :</td>
             <td>

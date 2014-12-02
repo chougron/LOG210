@@ -212,6 +212,7 @@ class DatabaseSeeder {
     private function addCommande()
     {
         $commandes = Commande::getBy(array());
+        $mail = true;
 
         while(count($commandes) <= 5) {
             $commande = new Commande();
@@ -225,6 +226,10 @@ class DatabaseSeeder {
             $commande->setDatetime('12/12/12 12:12');
             $commande->createConfirmationCode();
             $commande->setAddress($address);
+            
+            $client = Client::getOneBy(array('_mail'=>"client@test.com"));
+            $commande->setClient($client);
+            
             $commande->save();
             
             $restaurant->save();
