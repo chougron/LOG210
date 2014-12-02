@@ -261,7 +261,7 @@ class EntrepreneurController extends Controller{
         if(Form::exists('restaurant_add_form')){
             
             //We check if all the input are filled
-            if(Form::checkEmpty(array('name')) || Form::checkEmpty(array('description'))){
+            if(Form::checkEmpty(array('name')) || Form::checkEmpty(array('description'))){
                 Session::addFlashMessage("Erreur :", 
                         'error', 
                         "Tous les champs ne sont pas remplis.");

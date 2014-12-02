@@ -34,12 +34,19 @@ class ProfileController extends Controller{
             }
             //associate the values
             $user->setAdress(Form::get('mainAddress'));
-            $user->setSecAdress(Form::get('secAddress'));
             $user->setFirstName(Form::get('firstName'));
             $user->setName(Form::get('name'));
             $user->setPhoneNumber(Form::get('phoneNumber'));
             $user->setBirthday(Form::get('birthday'));
             //We save this User in the DB
+            $user->save();
+            
+            $adress = new \App\Model\Address();
+            $adress->setAddress(Form::get('mainAddress'));
+            $adress->setUser($user);
+            $adress->save();
+            
+            $user->setAddress($adress);
             $user->save();
             
             Session::connect($user);
