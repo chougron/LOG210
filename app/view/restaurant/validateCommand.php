@@ -24,5 +24,3 @@ Adresse : <?php echo $command->getAddress()->getAddress(); ?>
         <input type="submit" value="Valider la date et l'heure" name="validate_command_form" class="btn btn-primary form-control">
     </div>
 </form>
-
-<a href="<?php echo $address; ?>">Payer</a>

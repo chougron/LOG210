@@ -108,7 +108,7 @@ class RestaurantController extends Controller{
             $client->setAddress($address);
             $client->save();
             
-            return View::render("restaurant/endCommand.php", array('command' => $command));
+            return View::render("restaurant/payCommand.php", array('command' => $command));
         }
         
         $total = 0;
@@ -118,25 +118,25 @@ class RestaurantController extends Controller{
         $command->setPrice($total);
         $command->save();
         
-        $url = "https://api-3t.paypal.com/nvp";
-        $url.= "?METHOD=SetExpressCheckout&VERSION=109.0";
-        $url.= "&USER=camille.hougron-facilitator_api1.gmail.com&PWD=1406519075&SIGNATURE=AFcWxV21C7fd0v3bYYYRCpSSRl31AuNKPdNYkjVrOZkal7ZEN8O5fX1K";
-        $url.= "&PAYMENTREQUEST_0_AMT=".$total.".00";
-        $url.= "&RETURNURL=http://localhost/log210/restaurant/validatePaypal/".$commandId;
-        $url.= "&CANCELURL=http://localhost/log210/restaurant/cancelPaypal/".$commandId;
-        $url.= "&PAYMENTREQUEST_0_PAYMENTACTION=Sale";
+        return View::render("restaurant/validateCommand.php", array('command' => $command));
+    }
+    
+    public function payCommand($commandId){
+        //If User is not logged in
+        if(!Session::isConnected() || Session::getUser()->getType() != USER_CLIENT){
+            Session::addFlashMessage("Non connecté", "error", "Veuillez vous connecter avant de continuer.");
+            Redirect::to('/restaurant');
+        }
         
-        $handle = fopen($url, "rb");
-        $contents = stream_get_contents($handle);
-        fclose($handle);
+        //If it doesn't exist, return to the list
+        $command = Commande::getOneBy(array('_id' => new \MongoId($commandId))); //TODO: Add the user ID in the array
+        if(!$command){
+            Redirect::to('/restaurant');
+        }
         
-        $token = explode("&", $contents);
-        $token = $token[0];
-        $token = explode("=", $token);
-        $token = $token[1];
+        $command->setStatus(Commande::COMMAND_STATUS_PAYED);
+        $command->save();
         
-        $address = "https://www.sandbox.paypal.com/incontext?token=".$token;
-        
-        return View::render("restaurant/validateCommand.php", array('command' => $command, 'address' => $address));
+        return View::render("restaurant/endCommand.php", array('command' => $command));
     }
 }
