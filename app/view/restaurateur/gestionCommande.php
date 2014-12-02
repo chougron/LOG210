@@ -16,7 +16,7 @@ use App\Model\Commande;
                 <td><?php echo $commande->getConfirmation();?></td>
                 <td><?php echo $commande->getDatetime(); ?></td>
                 <td>
-                    <a href="restaurateur/editeMenu/<?php echo $commande->getId();?>">Préparer</a>
+                    <a href="restaurateur/gererCommande/<?php echo $commande->getId();?>">Préparer</a>
                 </td>
             </tr>
     <?php endif;

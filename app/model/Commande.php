@@ -19,7 +19,6 @@ class Commande extends Model
     protected $_datetime;
     protected $_status;
     protected $_price;
-    protected $_restaurateur;
 
     /**
      * Set the Client associated to the Commande
@@ -126,16 +125,6 @@ class Commande extends Model
      */
     public static function getBy($array) {
         return parent::getBy($array);
-    }
-    
-    public function setRestaurateur(Restaurateur $restaurateur)
-    {
-        $this->_restaurateur = $restaurateur->getId();
-    }
-
-    public function getRestaurateur()
-    {
-        return Restaurateur::getOneBy(array('_id' => $this->_restaurateur));
     }
     
     /**
