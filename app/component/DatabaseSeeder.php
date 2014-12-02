@@ -196,27 +196,24 @@ class DatabaseSeeder {
 
     private function addCommande()
     {
-        $commandes = Commande::getOneBy(array());
-        $i = 0;
-        foreach($commandes as $dummy){
+        $commandes = Commande::getBy(array());
 
-            $i++;
-            if($i>=5) {
-                $commande = new Commande();
-                $restaurant = Restaurant::getOneBy(array('name' => 'Ma Queue Mickey'));
-                $item = ItemMenu::getOneBy(array('name' => 'Burger'));
-                $restaurateur = $restaurant->getRestaurateur();
+        while(count($commandes) <= 5) {
+            $commande = new Commande();
+            $restaurant = Restaurant::getOneBy(array('name' => 'Ma Queue Mickey'));
+            $item = ItemMenu::getOneBy(array('name' => 'Burger'));
+            $restaurateur = Restaurateur::getOneBy(array('_id' => $restaurant->getRestaurateur()->getId()));
 
-                $commande->setItem($item, 2);
-                $commande->setStatus(Commande::COMMAND_STATUS_PAYED);
-                $commande->setDatetime('12/12/12 12:12');
-                $commande->createConfirmationCode();
-                $commande->save();
+            $commande->setItem($item, 2);
+            $commande->setStatus(Commande::COMMAND_STATUS_PAYED);
+            $commande->setDatetime('12/12/12 12:12');
+            $commande->createConfirmationCode();
+            $commande->save();
 
-                $restaurateur->addCommande($commande);
-                $restaurant->save();
-            }
+            $restaurateur->addCommande($commande);
+            $restaurant->save();
+
+            $commandes = Commande::getBy(array());
         }
-
     }
 }

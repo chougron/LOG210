@@ -183,6 +183,7 @@ class RestaurateurController extends Controller{
 
     public function gererCommande($id = 0)
     {
+        $restaurateur = Restaurateur::getOneBy(array('_id' => new \MongoId(Session::getUser()->getId())));
         //If we are not connected as a Restaurateur, send to the login page
         if (!Session::isConnected() || Session::getUser()->getType() != USER_RESTAURATEUR) {
             return Redirect::to('/restaurateur/login');
@@ -190,6 +191,7 @@ class RestaurateurController extends Controller{
 
         //If no restaurant is specified, display the list
         if ($id == 0) {
+            //$commandes = $restaurateur->getCommandes();
             $commandes = Commande::getBy(array());
             return View::render("restaurateur/gestionCommande.php", array('commandes' => $commandes));
         }
@@ -199,13 +201,14 @@ class RestaurateurController extends Controller{
         if($commande->getStatus() < Commande::COMMAND_STATUS_PREPARING)
         {
             $commande->setStatus(Commande::COMMAND_STATUS_PREPARING);
+            $commande->save();
         }
 
         if(Form::exists('finir_commande_form'))
         {
             $commande->setStatus(commande::COMMAND_STATUS_READY);
             $commande->save();
-            $commandes = Commande::getBy(array());
+            $commandes = $restaurateur->getCommandes();
             return View::render("restaurateur/gestionCommande.php", array('commandes' => $commandes));
         }
 

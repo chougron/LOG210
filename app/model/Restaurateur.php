@@ -105,6 +105,16 @@ class Restaurateur extends User
             }
         }
     }
+
+    /**
+     * Return the Commandes associated with the Restaurateur
+     * @return Commande[]
+     */
+    public function getCommandes()
+    {
+        $commandes = Commande::getBy(array('_id' => array('$in' => $this->_commandes)));
+        return $commandes;
+    }
     
     /**
      * Save a Restaurateur

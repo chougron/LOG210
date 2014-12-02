@@ -20,8 +20,9 @@
             <td>
                 <?php
                     foreach($items as $item) :
-                    echo $item->getName();
-                ?><br />
+                    echo $item->getName(); ?>
+                    (x <?php echo $item->quantity;?>)
+                <br />
                 <?php endforeach; ?>
             </td>
         </tr>
