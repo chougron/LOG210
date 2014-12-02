@@ -29,7 +29,6 @@ class Model {
     /**
      * Save a model in the DB
      * @return boolean
-     * TODO: Work with errors, do updates if object have an _id
      */
     public function save()
     {

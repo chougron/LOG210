@@ -33,7 +33,6 @@ class ProfileController extends Controller{
                 }
             }
             //associate the values
-            $user->setAdress(Form::get('mainAddress'));
             $user->setFirstName(Form::get('firstName'));
             $user->setName(Form::get('name'));
             $user->setPhoneNumber(Form::get('phoneNumber'));

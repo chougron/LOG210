@@ -15,6 +15,7 @@ use App\Model\Livreur;
 class DatabaseSeeder {
     /**
      * Seed the Database with test users and restaurants
+     * REMOVE THE CALLS WHEN THE DATABASE IS SEEDED
      */
     public function seed()
     {

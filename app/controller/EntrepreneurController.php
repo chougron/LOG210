@@ -283,7 +283,6 @@ class EntrepreneurController extends Controller{
             $restaurant->setName(Form::get('name'));
             $restaurant->setDescription(Form::get('description'));
             $restaurant->setPicture('img/generic.jpg');
-            //TODO: Set the picture from the form
             
             //We save this Restaurant in the DB
             $restaurant->save();

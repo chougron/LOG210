@@ -75,7 +75,6 @@ class RestaurantController extends Controller{
                 $address = Address::getOneBy(array('_id' => new \MongoId($addressId)));
                 if(!$address){
                     die("Erreur à gérer.");
-                    //TODO: ERROR
                 }
             }
             $address->setByDefault();
@@ -99,7 +98,7 @@ class RestaurantController extends Controller{
             Redirect::to('/restaurant');
         }
         //If it doesn't exist, return to the list
-        $command = Commande::getOneBy(array('_id' => new \MongoId($commandId))); //TODO: Add the user ID in the array
+        $command = Commande::getOneBy(array('_id' => new \MongoId($commandId)));
         if(!$command){
             Redirect::to('/restaurant');
         }
@@ -138,7 +137,7 @@ class RestaurantController extends Controller{
         }
         
         //If it doesn't exist, return to the list
-        $command = Commande::getOneBy(array('_id' => new \MongoId($commandId))); //TODO: Add the user ID in the array
+        $command = Commande::getOneBy(array('_id' => new \MongoId($commandId)));
         if(!$command){
             Redirect::to('/restaurant');
         }
@@ -160,7 +159,7 @@ class RestaurantController extends Controller{
         }
         
         //If it doesn't exist, return to the list
-        $command = Commande::getOneBy(array('_id' => new \MongoId($commandId))); //TODO: Add the user ID in the array
+        $command = Commande::getOneBy(array('_id' => new \MongoId($commandId)));
         if(!$command){
             Redirect::to('/restaurant');
         }
