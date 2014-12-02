@@ -2,14 +2,15 @@
 <?php
 echo $restaurant->getDescription();
 if ($restaurant->hasMenu()):
-    $menus = $restaurant->getMenus();
+    $menus = $restaurant->getMenus(); ?>
 
-    foreach ($menus as $menu){
-        $menuItems = $menu->getMenuItems();
-    ?>
     <div class="row">
-        <h3><?php echo $menu->getName(); ?> :</h3>
         <form action = "restaurant/see/<?php echo $restaurant->getId(); ?>" method = "post">
+            <?php foreach ($menus as $menu):
+                $menuItems = $menu->getMenuItems();?>
+
+            <h3><?php echo $menu->getName(); ?> :</h3>
+
             <?php foreach ($menuItems as $menuItem): ?>
                 <div class="form-group"><?php echo $menuItem->getName(); ?> | Prix : <?php echo $menuItem->getPrice(); ?>
                     | Quantité : <input type="number" value="0" name="<?php echo $menuItem->getId(); ?>" class="form-control" required min="0">
@@ -29,12 +30,12 @@ if ($restaurant->hasMenu()):
                 <input id="adresseTextField" type="text" class="form-control" placeholder="Adresse alternative" name="altAdress">
             </div><!-- /input-group -->
 
+            <?php endforeach; ?>
             <div class="form-group">
                 <input type="submit" value="Commander" name="order_form" class="btn btn-primary form-control">
             </div>
         </form>
     </div><!-- /.row -->
-<?php }
-    else: ?>
+<?php else: ?>
     Ce restaurant n'a pas encore de menu.
 <?php endif; ?>
