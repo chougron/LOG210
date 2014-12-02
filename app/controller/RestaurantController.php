@@ -139,4 +139,22 @@ class RestaurantController extends Controller{
         
         return View::render("restaurant/endCommand.php", array('command' => $command));
     }
+    
+    public function cancelCommand($commandId){
+        //If User is not logged in
+        if(!Session::isConnected() || Session::getUser()->getType() != USER_CLIENT){
+            Session::addFlashMessage("Non connecté", "error", "Veuillez vous connecter avant de continuer.");
+            Redirect::to('/restaurant');
+        }
+        
+        //If it doesn't exist, return to the list
+        $command = Commande::getOneBy(array('_id' => new \MongoId($commandId))); //TODO: Add the user ID in the array
+        if(!$command){
+            Redirect::to('/restaurant');
+        }
+        
+        $command->delete();
+        
+        return Redirect::to('/restaurant');
+    }
 }

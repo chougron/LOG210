@@ -7,7 +7,7 @@
      <div id="paypal_item">
 
      </div>
-<input name = "business" value = "ppotvin@lanets.ca" type = "hidden">
+<input name = "business" value = "log210-3@gmail.com" type = "hidden">
 <input name = "handling_cart" value = "0" type = "hidden">
 <input name = "currency_code" value = "USD" type = "hidden">
 <input name = "return" value = "http://localhost/log210/restaurant/payCommand/<?php echo $commande->getId(); ?>" type = "hidden">
