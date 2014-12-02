@@ -101,6 +101,15 @@ class RestaurantController extends Controller{
         
         //If we just validated the command
         if(Form::exists('validate_command_form')){
+
+            $datetime = Form::get('datetime');
+            if($datetime == "" || is_null($datetime)){
+                Session::addFlashMessage("Erreur :",
+                    'error',
+                    "Vous devez indiquer une date et une heure.");
+                $error = "Veuillez indiquer un nom de menu";
+                return View::render("restaurant/validateCommand.php", array('error' => $error, 'command' => $command));
+            }
             $command->setDateTime(Form::get('datetime'));
             $command->setStatus(Commande::COMMAND_STATUS_VALIDATED);
             
