@@ -1,5 +1,5 @@
 <h2>Paiement de la commande</h2>
-
+<hr/>
 Adresse de livraison : <?php echo $command->getAddress()->getAddress(); ?><br/><br/>
 Date prévue de la livraison :  <?php echo $command->getDateTime(); ?><br/><br/>
 
@@ -15,6 +15,7 @@ Total : <?php echo $command->getPrice(); ?><br/><br/>
 
 Adresse : <?php echo $command->getAddress()->getAddress(); ?><br/>
 
+<br/>
 
 <form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post">
 <input type="hidden" name="cmd" value="_cart">
@@ -33,5 +34,8 @@ Adresse : <?php echo $command->getAddress()->getAddress(); ?><br/>
 <input type="hidden" name="return" value="http://localhost/log210/restaurant/payCommand/<?php echo $command->getId(); ?>" >
 <input type="hidden" name="cbt" value="Retour au site" >
 <input type="hidden" name="cancel_return" value="http://localhost/log210/restaurant/cancel/<?php echo $command->getId(); ?>" >
-<input type="submit" value="Payer par paypal">
+<div class="form-group">
+    <input type="submit" value="Payer par paypal" class="btn btn-primary form-control">
+</div>
 </form>
+    <a href="restaurant" class="btn btn-danger form-control">Annuler la commande</a>

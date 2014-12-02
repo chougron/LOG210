@@ -63,3 +63,8 @@
 
     <button type="submit" class="btn btn-default center-block" name="menu_name_edit_form">Modifier</button>
 </form>
+
+<br/><br/>
+<div class="form-group">
+    <a href="restaurateur/selectRestaurant/<?php echo $menu->getRestaurant()->getId(); ?>" class="btn btn-danger form-control">Retour</a>
+</div>

@@ -1,4 +1,5 @@
 <h2>Validation de la commande</h2>
+<hr/>
 Votre commande a bien été validée.<br/>
 
 Numéro de confirmation : <?php echo $command->getConfirmation(); ?><br/><br/>
@@ -19,3 +20,8 @@ Total : <?php echo $command->getPrice(); ?><br/><br/>
 Adresse : <?php echo $command->getAddress()->getAddress(); ?><br/>
 
 Un mail contenant les informations de la commande vous a été envoyé.
+
+<br/><br/>
+<div class="row">
+    <a href="restaurant" class="btn btn-primary form-control">Retour</a>
+</div>

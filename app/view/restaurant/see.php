@@ -1,4 +1,5 @@
 <h2><?php echo $restaurant->getName(); ?></h2>
+<hr/>
 <?php
 echo $restaurant->getDescription();
 if ($restaurant->hasMenu()):
@@ -44,5 +45,9 @@ if ($restaurant->hasMenu()):
         </form>
     </div><!-- /.row -->
 <?php else: ?>
-    Ce restaurant n'a pas encore de menu.
+    <br/><br/>
+    <p class="bg-danger text-danger text-center">Ce restaurant n'a pas encore de menu.</p>
 <?php endif; ?>
+<div class="row">
+    <a href="restaurant" class="btn btn-danger form-control">Retour</a>
+</div>

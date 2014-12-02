@@ -21,7 +21,7 @@ class LoginController extends Controller{
             //Confirm if PW matches
             if($user && $user->getPassword() == Client::encryptPassword(Form::get('password'))){
                 Session::connect($user);
-                return View::render("login/complete.php", array('user'=>$user));
+                return \App\Component\Redirect::to('/');
             }
             
             $error = "Vos informations de connexion sont incorrects. Merci de réessayer.";
@@ -33,7 +33,7 @@ class LoginController extends Controller{
     
     public function logout(){
         Session::disconnect();
-        View::render("index/index.php");
+        return \App\Component\Redirect::to('/');
     }
     
     
