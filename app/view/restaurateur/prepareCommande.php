@@ -1,4 +1,4 @@
-<h3>Gérer les commandes</h3>
+<h3>Préparer la commande</h3>
 
 <table class="table table-striped table-bordered">
     <?php $items = $commande->getItems(); ?>
