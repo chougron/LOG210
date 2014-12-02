@@ -2,23 +2,30 @@
 <?php
 echo $restaurant->getDescription();
 if ($restaurant->hasMenu()):
-    $menuItems = $restaurant->getMenu()->getMenuItems();
-    ?>
+    $menus = $restaurant->getMenus(); ?>
+
     <div class="row">
-        <h3>Menu :</h3>
         <form action = "restaurant/see/<?php echo $restaurant->getId(); ?>" method = "post">
+            <?php foreach ($menus as $menu):
+                $menuItems = $menu->getMenuItems();?>
+
+            <h3><?php echo $menu->getName(); ?> :</h3>
+
             <?php foreach ($menuItems as $menuItem): ?>
                 <div class="form-group"><?php echo $menuItem->getName(); ?> | Prix : <?php echo $menuItem->getPrice(); ?>
                     | Quantité : <input type="number" value="0" name="<?php echo $menuItem->getId(); ?>" class="form-control" required min="0">
                 </div>
+            <?php endforeach; ?>
             <?php endforeach; ?>
 
             <div class="form-group">
                 Adresse de livraison :
                 <select name="address" class="form-control" required>
                     <?php $mainAddress = \App\Component\Session::getUser()->getAddress(); ?>
+                    <?php /*
                     <?php var_dump($mainAddress); ?>
                     <?php var_dump(\App\Component\Session::getUser()); ?>
+                     */?>
                     <?php foreach ($addresses as $address): ?>
                     <option value="<?php echo $address->getId(); ?>" <?php if($address->getId() == $mainAddress->getId()): ?> selected<?php endif; ?>>
                         <?php echo $address->getAddress(); ?>

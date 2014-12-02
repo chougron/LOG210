@@ -9,6 +9,8 @@ class Commande extends Model
     const COMMAND_STATUS_TEMPORARY = 0;
     const COMMAND_STATUS_VALIDATED = 1;
     const COMMAND_STATUS_PAYED = 2;
+    const COMMAND_STATUS_PREPARING = 3;
+    const COMMAND_STATUS_READY = 4;
 
     protected $_client;
     protected $_menuItems;
@@ -16,6 +18,8 @@ class Commande extends Model
     protected $_confirmation;
     protected $_datetime;
     protected $_status;
+    protected $_price;
+    protected $_restaurateur;
 
     /**
      * Set the Client associated to the Commande
@@ -96,6 +100,14 @@ class Commande extends Model
 
     function setStatus($status) {
         $this->_status = $status;
+    }
+    
+    function setPrice($price){
+        $this->_price = $price;
+    }
+    
+    function getPrice(){
+        return $this->_price;
     }
 
     /**

@@ -24,7 +24,7 @@ class Restaurant extends Model
      * The id of the associated Menu
      * @var String
      */
-    protected $menu;
+    protected $_menus = array();
 
     /**
      * The description of the Restaurant
@@ -80,23 +80,53 @@ class Restaurant extends Model
      * Return the associated Menu
      * @return \App\Model\Menu
      */
-    public function getMenu()
+    public function getMenus()
     {
-        return Menu::getOneBy(array('_id' => $this->menu));
+        $menus = Menu::getBy(array('_id' => array('$in' => $this->_menus)));
+        return $menus;
     }
 
     /**
-     * Set the associated Menu
-     * @param \App\Model\Menu $menu
+     * Erases the menu
+     * @param Menu $menu
      */
-    public function setMenu(Menu $menu)
+    public function removeMenu(Menu $menu)
     {
-        $this->menu = $menu->getId();
+        $id = $menu->getId();
+        //If the object doesn't have an id, return
+        if(is_null($id)) return;
+
+        //We search he $id and remove it if we find it
+        foreach($this->_menus as $key => $idMenu){
+            if($id->__toString() == $idMenu->__toString()){
+                unset($this->_menus[$key]);
+                return;
+            }
+        }
+    }
+
+    /**
+     * Adds the menu to the array
+     * @param Menu $menu
+     */
+    public function addMenu(Menu $menu)
+    {
+        $id = $menu->getId();
+        //If the object doesn't have an id, return
+        if(is_null($id)) return;
+
+        //If the Menu is already in the array, return
+        foreach($this->_menus as $idMenu){
+            if($id->__toString() == $idMenu->__toString()){
+                return;
+            }
+        }
+        $this->_menus[] = $id;
     }
 
     public function hasMenu()
     {
-        return $this->menu != null;
+        return $this->_menus != null;
     }
     
     /**
@@ -147,7 +177,7 @@ class Restaurant extends Model
             $restaurateur->removeRestaurant($this);
             $restaurateur->save();
         }
-        $menu = $this->getMenu();
+        $menu = $this->getMenus();
         if($menu){
             $menu->delete();
         }

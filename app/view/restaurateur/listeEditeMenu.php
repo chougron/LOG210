@@ -6,17 +6,22 @@
         <th>Éditer</th>
     </thead>
     <tbody>
-        <?php foreach($restaurants as $restaurant):?>
+        <?php foreach($menus as $menu):?>
         <tr>
-            <td><?php echo $restaurant->getName();?></td>
+            <td><?php echo $menu->getName();?></td>
             <td>
-                <a href="restaurateur/editeMenu/<?php echo $restaurant->getId();?>">Éditer</a>
+                <a href="restaurateur/editeMenu/<?php echo $menu->getId();?>">Éditer</a>
             </td>
         </tr>
     <?php endforeach; ?>
     </tbody>
 </table>
 
-<?php if(isset($error)):?>
-    Erreur : <?php echo $error; ?>
-<?php endif; ?>
+<form role="form" action="restaurateur/selectRestaurant/<?php echo $restaurant->getId(); ?>" method="POST">
+    <div class="form-group">
+        <label for="name">Nom</label>
+        <input type="text" class="form-control" name="name" id="name" placeholder="Nom" required>
+    </div>
+
+    <button type="submit" class="btn btn-default center-block" name="menu_edit_form">Ajouter</button>
+</form>

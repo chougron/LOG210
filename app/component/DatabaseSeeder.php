@@ -9,6 +9,7 @@ use App\Model\Restaurant;
 use App\Model\Client;
 use App\Model\Address;
 use App\Model\Menu;
+use App\Model\Commande;
 
 class DatabaseSeeder {
     /**
@@ -154,7 +155,7 @@ class DatabaseSeeder {
             $menu->addItem($item2);
             $menu->save();
 
-            $restaurant->setMenu($menu);
+            $restaurant->addMenu($menu);
             $restaurant->save();
         }
         
@@ -175,7 +176,7 @@ class DatabaseSeeder {
 
             $menu->addItem($item1);
             $menu->save();
-            $restaurant->setMenu($menu);
+            $restaurant->addMenu($menu);
             $restaurant->save();
 
             $item2 = new ItemMenu();
@@ -187,8 +188,14 @@ class DatabaseSeeder {
             $menu->addItem($item2);
             $menu->save();
 
-            $restaurant->setMenu($menu);
+            $restaurant->addMenu($menu);
             $restaurant->save();
         }
+    }
+
+    private function addCommande()
+    {
+        $commande = new Commande();
+
     }
 }
