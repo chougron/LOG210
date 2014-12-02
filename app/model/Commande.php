@@ -130,7 +130,7 @@ class Commande extends Model
     /**
      * Get all the Commande from the corresponding Restaurateur
      * @param \App\Model\Restaurateur $restaurateur
-     * @return Commande[]
+     * @return \App\Model\Commande[]
      */
     public static function getByRestaurateur(Restaurateur $restaurateur){
         $commandes = self::getBy(array());

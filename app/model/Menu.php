@@ -137,4 +137,15 @@ class Menu extends Model
     public static function getBy($array) {
         return parent::getBy($array);
     }
+    
+    /**
+     * Save the current Menu
+     */
+    public function save() {
+        foreach($this->getMenuItems() as $item){
+            $item->setMenu($this);
+            $item->save();
+        }
+        parent::save();
+    }
 }
