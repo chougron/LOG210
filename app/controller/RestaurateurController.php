@@ -196,7 +196,7 @@ class RestaurateurController extends Controller{
 
         $commande = Commande::getOneBy(array('_id' => new \MongoId($id)));
 
-        if($commande->getStatus() < COMMAND::COMMAND_STATUS_PREPARING)
+        if($commande->getStatus() < Commande::COMMAND_STATUS_PREPARING)
         {
             $commande->setStatus(Commande::COMMAND_STATUS_PREPARING);
         }
@@ -204,11 +204,12 @@ class RestaurateurController extends Controller{
         if(Form::exists('finir_commande_form'))
         {
             $commande->setStatus(commande::COMMAND_STATUS_READY);
+            $commande->save();
             $commandes = Commande::getBy(array());
-            return View::render("restaurant/gestionCommande.php", array('commandes' => $commandes));
+            return View::render("restaurateur/gestionCommande.php", array('commandes' => $commandes));
         }
 
-        return View::render("restaurateur/prepareCommande.php", $commande);
+        return View::render("restaurateur/prepareCommande.php", array('commande' => $commande));
 
     }
 
