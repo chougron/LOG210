@@ -16,6 +16,7 @@ if ($restaurant->hasMenu()):
                     | Quantité : <input type="number" value="0" name="<?php echo $menuItem->getId(); ?>" class="form-control" required min="0">
                 </div>
             <?php endforeach; ?>
+            <?php endforeach; ?>
 
             <div class="form-group">
                 Adresse de livraison :
@@ -30,7 +31,6 @@ if ($restaurant->hasMenu()):
                 <input id="adresseTextField" type="text" class="form-control" placeholder="Adresse alternative" name="altAdress">
             </div><!-- /input-group -->
 
-            <?php endforeach; ?>
             <div class="form-group">
                 <input type="submit" value="Commander" name="order_form" class="btn btn-primary form-control">
             </div>

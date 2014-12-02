@@ -9,7 +9,8 @@ class Commande extends Model
     const COMMAND_STATUS_TEMPORARY = 0;
     const COMMAND_STATUS_VALIDATED = 1;
     const COMMAND_STATUS_PAYED = 2;
-    const COMMAND_STATUS_PREPARED = 3;
+    const COMMAND_STATUS_PREPARING = 3;
+    const COMMAND_STATUS_READY = 4;
 
     protected $_client;
     protected $_menuItems;
@@ -18,6 +19,7 @@ class Commande extends Model
     protected $_datetime;
     protected $_status;
     protected $_price;
+    protected $_restaurateur;
 
 
     public function setClient(Client $client){

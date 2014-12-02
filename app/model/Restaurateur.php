@@ -12,6 +12,7 @@ class Restaurateur extends User
     }
     
     protected $_restaurants = array();
+    protected $_commandes = array();
     
     /**
      * Add a Restaurant to the list
@@ -62,6 +63,47 @@ class Restaurateur extends User
     {
         $restaurants = Restaurant::getBy(array('_id' => array('$in' => $this->_restaurants)));
         return $restaurants;
+    }
+
+    /**
+     * Add a Commande to the list
+     * @param Commande $commande
+     */
+    public function addCommande(Commande $commande)
+    {
+        $id = $commande->getId();
+        //If the object doesn't have an id, return
+        if(is_null($id)){
+            return;
+        }
+        //If the Restaurant is already in the array, return
+        foreach ($this->_commandes as $commande){
+            if($id->__toString() == $commande->__toString()){
+                return;
+            }
+        }
+
+        $this->_commandes[] = $id;
+    }
+
+    /**
+     * Remove a Commande from the list
+     * @param Commande $commande
+     */
+    public function removeCommande(Commande $commande)
+    {
+        $id = $commande->getId();
+        //If the object doesn't have an id, return
+        if(is_null($id)){
+            return;
+        }
+        //We search the $id and remove it if we find it
+        foreach($this->_commandes as $key => $idCommande){
+            if($id->__toString() == $idCommande->__toString()){
+                unset($this->_commandes[$key]);
+                return;
+            }
+        }
     }
     
     /**

@@ -10,6 +10,7 @@ use App\Model\Commande;
 use App\Component\Form;
 use App\Component\Session;
 use App\Model\Address;
+use App\Model\Restaurateur;
 
 class RestaurantController extends Controller{
     
@@ -23,6 +24,7 @@ class RestaurantController extends Controller{
     public function see($idRestaurant){
         //Get the restaurant by its id
         $restaurant = Restaurant::getOneBy(array('_id' => new \MongoId($idRestaurant)));
+        $restaurateur = Restaurateur::getOneBy(array('_id' => new \MongoId($restaurant->getRestaurateur()->getId())));
         
         //If User is not logged in
         if(!Session::isConnected() || Session::getUser()->getType() != USER_CLIENT){
@@ -39,6 +41,8 @@ class RestaurantController extends Controller{
         
         if(Form::exists('order_form')){
             $commande = new Commande();
+            $restaurateur->addCommande($commande);
+            $restaurant->save();
             $menus = $restaurant->getMenus();
 
             foreach ($menus as $menu) {
