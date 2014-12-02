@@ -199,8 +199,9 @@ class DatabaseSeeder {
         $commande = new Commande();
         $restaurant = Restaurant::getOneBy(array('name'=>'Ma Queue Mickey'));
         $item = ItemMenu::getOneBy(array('name' => 'Burger'));
+        $restaurateur = $restaurant->getRestaurateur();
 
-        $commande->setRestaurant($restaurant);
+        $commande->setRestaurateur($restaurateur);
         $commande->setItem($item, 2);
         $commande->setStatus(Commande::COMMAND_STATUS_PAYED);
         $commande->setDatetime('12/12/12 12:12');

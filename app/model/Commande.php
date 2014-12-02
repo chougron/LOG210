@@ -78,35 +78,35 @@ class Commande extends Model
         return $items;
     }
     
-    function getConfirmation() {
+    public function getConfirmation() {
         return $this->_confirmation;
     }
 
-    function getDatetime() {
+     public function getDatetime() {
         return $this->_datetime;
     }
 
-    function getStatus() {
+    public function getStatus() {
         return $this->_status;
     }
 
-    function createConfirmationCode() {
+    public function createConfirmationCode() {
         $this->_confirmation = sha1(date('YmHis'));
     }
 
-    function setDatetime($datetime) {
+    public function setDatetime($datetime) {
         $this->_datetime = $datetime;
     }
 
-    function setStatus($status) {
+    public function setStatus($status) {
         $this->_status = $status;
     }
     
-    function setPrice($price){
+    public function setPrice($price){
         $this->_price = $price;
     }
     
-    function getPrice(){
+    public function getPrice(){
         return $this->_price;
     }
 
@@ -128,4 +128,13 @@ class Commande extends Model
         return parent::getBy($array);
     }
     
+    public function setRestaurateur(Restaurateur $restaurateur)
+    {
+        $this->_restaurateur = $restaurateur->getId();
+    }
+
+    public function getRestaurateur()
+    {
+        return Restaurateur::getOneBy(array('_id' => $this->_restaurateur));
+    }
 }
