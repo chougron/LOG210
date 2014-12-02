@@ -87,4 +87,22 @@ class Restaurateur extends User
         }
         parent::delete();
     }
+
+    /**
+     * Return the first Restaurateur corresponding to the query array
+     * @param mixed $array
+     * @return \App\Model\Restaurateur
+     */
+    public static function getOneBy($array) {
+        return parent::getOneBy($array);
+    }
+    
+    /**
+     * Return all the Restaurateurs corresponding to the query array
+     * @param mixed $array
+     * @return \App\Model\Restaurateur[]
+     */
+    public static function getBy($array) {
+        return parent::getBy($array);
+    }
 }

@@ -21,5 +21,21 @@ class Address extends Model
         $this->user = $user->getId();
     }
 
-
+    /**
+     * Return the first Address corresponding to the query array
+     * @param mixed $array
+     * @return \App\Model\Address
+     */
+    public static function getOneBy($array) {
+        return parent::getOneBy($array);
+    }
+    
+    /**
+     * Return all the Addresses corresponding to the query array
+     * @param mixed $array
+     * @return \App\Model\Address[]
+     */
+    public static function getBy($array) {
+        return parent::getBy($array);
+    }
 }

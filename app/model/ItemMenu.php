@@ -96,4 +96,22 @@ class ItemMenu extends Model
         $menu = Menu::getOneBy(array('_id' => $this->menu));
         return $menu;
     }
+
+    /**
+     * Return the first ItemMenu corresponding to the query array
+     * @param mixed $array
+     * @return \App\Model\ItemMenu
+     */
+    public static function getOneBy($array) {
+        return parent::getOneBy($array);
+    }
+    
+    /**
+     * Return all the ItemMenus corresponding to the query array
+     * @param mixed $array
+     * @return \App\Model\ItemMenu[]
+     */
+    public static function getBy($array) {
+        return parent::getBy($array);
+    }
 } 

@@ -24,7 +24,7 @@ class Menu extends Model
     
     /**
      * Returns the Items of the menu
-     * @return MenuItems[]
+     * @return \App\Model\MenuItems[]
      */
     public function getMenuItems(){
         $items = ItemMenu::getBy(array('_id' => array('$in' => $this->_menuItems)));
@@ -33,7 +33,7 @@ class Menu extends Model
 
     /**
      * Return the restaurant associated
-     * @return Restaurant
+     * @return \App\Model\Restaurant
      */
     public function getRestaurant()
     {
@@ -43,7 +43,7 @@ class Menu extends Model
 
     /**
      * Set the id of the Restaurant associated
-     * @param Restaurant $restaurant
+     * @param \App\Model\Restaurant $restaurant
      */
     public function setRestaurant(Restaurant $restaurant)
     {
@@ -70,7 +70,7 @@ class Menu extends Model
     
     /**
      * Erases the item
-     * @param ItemMenu $itemMenu
+     * @param \App\Model\ItemMenu $itemMenu
      */
     public function removeItem(ItemMenu $itemMenu)
     {
@@ -89,7 +89,7 @@ class Menu extends Model
     
     /**
      * Adds the item and its price to the array.
-     * @param ItemMenu $itemMenu
+     * @param \App\Model\ItemMenu $itemMenu
      */
     public function addItem(ItemMenu $menuItem)
     {
@@ -118,5 +118,23 @@ class Menu extends Model
             $menuItem->delete();
         }
         parent::delete();
+    }
+
+    /**
+     * Return the first Menu corresponding to the query array
+     * @param mixed $array
+     * @return \App\Model\Menu
+     */
+    public static function getOneBy($array) {
+        return parent::getOneBy($array);
+    }
+    
+    /**
+     * Return all the Menus corresponding to the query array
+     * @param mixed $array
+     * @return \App\Model\Menu[]
+     */
+    public static function getBy($array) {
+        return parent::getBy($array);
     }
 }

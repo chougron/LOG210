@@ -17,11 +17,18 @@ class Commande extends Model
     protected $_datetime;
     protected $_status;
 
-
+    /**
+     * Set the Client associated to the Commande
+     * @param \App\Model\Client $client
+     */
     public function setClient(Client $client){
         $this->_client = $client->getId();
     }
     
+    /**
+     * Return the Client associated to the Commande
+     * @return \App\Model\Client
+     */
     function getClient() {
         return Client::getOneBy(array('_id' => $this->_client));
     }
@@ -36,7 +43,7 @@ class Commande extends Model
 
     /**
      * Return the address of the command
-     * @return Address
+     * @return \App\Model\Address
      */
     function getAddress() {
         return Address::getOneBy(array('_id' => $this->_address));
@@ -45,7 +52,7 @@ class Commande extends Model
     /**
      * Set an ItemMenu with its associated quantity
      * @param \App\Model\ItemMenu $itemMenu
-     * @param type $quantity
+     * @param int $quantity
      */
     public function setItem(ItemMenu $itemMenu, $quantity){
         $this->_menuItems[$itemMenu->getId()->__toString()] = $quantity;
@@ -53,7 +60,7 @@ class Commande extends Model
     
     /**
      * Return an array of ItemMenu, with an associated quantity (accessed by ->quantity)
-     * @return ItemMenu[]
+     * @return \App\Model\ItemMenu[]
      */
     public function getItems(){
         $items = array();
@@ -91,6 +98,22 @@ class Commande extends Model
         $this->_status = $status;
     }
 
-
+    /**
+     * Return the first Commande corresponding to the query array
+     * @param mixed $array
+     * @return \App\Model\Commande
+     */
+    public static function getOneBy($array) {
+        return parent::getOneBy($array);
+    }
+    
+    /**
+     * Return all the Commandes corresponding to the query array
+     * @param mixed $array
+     * @return \App\Model\Commande[]
+     */
+    public static function getBy($array) {
+        return parent::getBy($array);
+    }
     
 }

@@ -16,8 +16,13 @@ if ($restaurant->hasMenu()):
             <div class="form-group">
                 Adresse de livraison :
                 <select name="address" class="form-control" required>
+                    <?php $mainAddress = \App\Component\Session::getUser()->getAddress(); ?>
+                    <?php var_dump($mainAddress); ?>
+                    <?php var_dump(\App\Component\Session::getUser()); ?>
                     <?php foreach ($addresses as $address): ?>
-                        <option value="<?php echo $address->getId(); ?>"><?php echo $address->getAddress(); ?></option>
+                    <option value="<?php echo $address->getId(); ?>" <?php if($address->getId() == $mainAddress->getId()): ?> selected<?php endif; ?>>
+                        <?php echo $address->getAddress(); ?>
+                    </option>
                     <?php endforeach; ?>
                     <option value="altAddress">Adresse alternative</option>
                 </select>

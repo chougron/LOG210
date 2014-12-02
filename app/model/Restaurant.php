@@ -153,4 +153,22 @@ class Restaurant extends Model
         }
         parent::delete();
     }
+
+    /**
+     * Return the first Restaurant corresponding to the query array
+     * @param mixed $array
+     * @return \App\Model\Restaurant
+     */
+    public static function getOneBy($array) {
+        return parent::getOneBy($array);
+    }
+    
+    /**
+     * Return all the Restaurants corresponding to the query array
+     * @param mixed $array
+     * @return \App\Model\Restaurant[]
+     */
+    public static function getBy($array) {
+        return parent::getBy($array);
+    }
 }

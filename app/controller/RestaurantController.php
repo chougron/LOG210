@@ -86,7 +86,7 @@ class RestaurantController extends Controller{
             Redirect::to('/restaurant');
         }
         
-        //If we just put the date and time of the command
+        //If we just validated the command
         if(Form::exists('validate_command_form')){
             $command->setDateTime(Form::get('datetime'));
             
@@ -94,6 +94,10 @@ class RestaurantController extends Controller{
             $command->setStatus(Commande::COMMAND_STATUS_VALIDATED);
             $command->save();
             
+            $client = $command->getClient();
+            $address = $command->getAddress();
+            $client->setAddress($address);
+            $client->save();
             
             return View::render("restaurant/endCommand.php", array('command' => $command));
         }

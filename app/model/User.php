@@ -38,7 +38,7 @@ class User extends Model
     
     /**
      * Get the Adress of the User
-     * @return Address
+     * @return \App\Model\Address
      */
     public function getAddress() {
         return Address::getOneBy(array('_id' => new \MongoId($this->_mainAdress)));
