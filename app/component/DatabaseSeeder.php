@@ -10,6 +10,7 @@ use App\Model\Client;
 use App\Model\Address;
 use App\Model\Menu;
 use App\Model\Commande;
+use App\Model\Livreur;
 
 class DatabaseSeeder {
     /**
@@ -89,6 +90,16 @@ class DatabaseSeeder {
             
             $address->setUser($user);
             $address->save();
+        }
+        
+        //Add a Livreur if he doesn't exist
+        if(!Livreur::getOneBy(array('_mail'=>"livreur@test.com"))){
+            $user = new Livreur();
+            $user->setFirstName("Jiang");
+            $user->setName("Li");
+            $user->setMail("livreur@test.com");
+            $user->setPassword("123123");
+            $user->save();
         }
     }
     
@@ -207,10 +218,13 @@ class DatabaseSeeder {
             $restaurant = Restaurant::getOneBy(array('name' => 'Ma Queue Mickey'));
             $item = ItemMenu::getOneBy(array('name' => 'Burger'));
 
+            $address = Address::getOneBy(array('address' => '18 Rue des Roses'));
+            
             $commande->setItem($item, 2);
             $commande->setStatus(Commande::COMMAND_STATUS_PAYED);
             $commande->setDatetime('12/12/12 12:12');
             $commande->createConfirmationCode();
+            $commande->setAddress($address);
             $commande->save();
             
             $restaurant->save();

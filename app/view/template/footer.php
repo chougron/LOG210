@@ -10,6 +10,8 @@
                       <a href="restaurateur">Accès Restaurateur</a>
                       -
                       <a href="entrepreneur">Accès Entrepreneur</a>
+                      -
+                      <a href="livreur">Accès Livreur</a>
                   </div>
               </div>
           </div>

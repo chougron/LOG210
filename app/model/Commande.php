@@ -20,6 +20,7 @@ class Commande extends Model
     protected $_datetime;
     protected $_status;
     protected $_price;
+    protected $_livreur;
 
     /**
      * Set the Client associated to the Commande
@@ -147,5 +148,21 @@ class Commande extends Model
         }
         
         return $foundCommandes;
+    }
+
+    /**
+     * Set the Livreur associated to the Commande
+     * @param \App\Model\Livreur $livreur
+     */
+    public function setLivreur(Livreur $livreur){
+        $this->_livreur = $livreur->getId();
+    }
+    
+    /**
+     * Return the Livreur associated to the Commande
+     * @return \App\Model\Livreur
+     */
+    function getLivreur() {
+        return Livreur::getOneBy(array('_id' => $this->_livreur));
     }
 }
