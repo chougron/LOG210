@@ -80,7 +80,7 @@ class ItemMenu extends Model
 
     /**
      * Set the associated Menu
-     * @param \App\Model\Menu $menu
+     * @param Menu $menu
      */
     public function setMenu(Menu $menu)
     {
@@ -89,7 +89,7 @@ class ItemMenu extends Model
 
     /**
      * Return the associated Menu
-     * @return \App\Model\Menu
+     * @return Menu
      */
     public function getMenu()
     {
@@ -100,7 +100,7 @@ class ItemMenu extends Model
     /**
      * Return the first ItemMenu corresponding to the query array
      * @param mixed $array
-     * @return \App\Model\ItemMenu
+     * @return ItemMenu
      */
     public static function getOneBy($array) {
         return parent::getOneBy($array);
@@ -109,7 +109,7 @@ class ItemMenu extends Model
     /**
      * Return all the ItemMenus corresponding to the query array
      * @param mixed $array
-     * @return \App\Model\ItemMenu[]
+     * @return ItemMenu[]
      */
     public static function getBy($array) {
         return parent::getBy($array);

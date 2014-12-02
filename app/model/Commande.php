@@ -3,6 +3,7 @@
 namespace App\Model;
 
 use App\Component\Model;
+use App\Model\ItemMenu;
 
 class Commande extends Model
 {
@@ -138,8 +139,9 @@ class Commande extends Model
         $foundCommandes = array();
         foreach($commandes as $commande){
             $items = $commande->getItems();
-            if($items[0]->getMenu()->getRestaurant()->getRestaurateur() &&
-                    $items[0]->getMenu()->getRestaurant()->getRestaurateur()->getId() == $restaurateur->getId()){
+            $item = ItemMenu::getOneBy(array('_id' => $items[0]->getId()));
+            if($item->getMenu()->getRestaurant()->getRestaurateur() &&
+                    $item->getMenu()->getRestaurant()->getRestaurateur()->getId() == $restaurateur->getId()){
                 $foundCommandes[] = $commande;
             }
         }
