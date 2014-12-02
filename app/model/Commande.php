@@ -137,4 +137,24 @@ class Commande extends Model
     {
         return Restaurateur::getOneBy(array('_id' => $this->_restaurateur));
     }
+    
+    /**
+     * Get all the Commande from the corresponding Restaurateur
+     * @param \App\Model\Restaurateur $restaurateur
+     * @return Commande[]
+     */
+    public static function getByRestaurateur(Restaurateur $restaurateur){
+        $commandes = self::getBy(array());
+        
+        $foundCommandes = array();
+        foreach($commandes as $commande){
+            $items = $commande->getItems();
+            if($items[0]->getMenu()->getRestaurant()->getRestaurateur() &&
+                    $items[0]->getMenu()->getRestaurant()->getRestaurateur()->getId() == $restaurateur->getId()){
+                $foundCommandes[] = $commande;
+            }
+        }
+        
+        return $foundCommandes;
+    }
 }

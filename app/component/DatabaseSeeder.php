@@ -21,7 +21,7 @@ class DatabaseSeeder {
         $this->addUsers();
         $this->associateRestaurants();
         $this->addMenu();
-        $this->addCommande();
+        //$this->addCommande();
     }
     
     /**
