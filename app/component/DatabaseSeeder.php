@@ -142,6 +142,7 @@ class DatabaseSeeder {
             $item1->setName("Burger");
             $item1->setDescription("Un petit pas coupé en deux avec un steak entre les deux.");
             $item1->setPrice(6.95);
+            $item1->setMenu($menu);
             $item1->save();
 
             $menu->addItem($item1);
@@ -151,6 +152,7 @@ class DatabaseSeeder {
             $item2->setName("Sous-marin 2000");
             $item2->setDescription("Sandwich de 2000g avec pâté de volaille, oeufs brouillés, steak de kangourou et pilulles contre la toux.");
             $item2->setPrice(3.99);
+            $item2->setMenu($menu);
             $item2->save();
 
             $menu->addItem($item2);
@@ -173,6 +175,7 @@ class DatabaseSeeder {
             $item1->setName("Poutine cantonaise");
             $item1->setDescription("Frites taillées en grain de riz avec du cantonais en grain");
             $item1->setPrice(25.45);
+            $item1->setMenu($menu);
             $item1->save();
 
             $menu->addItem($item1);
@@ -184,6 +187,7 @@ class DatabaseSeeder {
             $item2->setName("Pâté chinois");
             $item2->setDescription("Inventé en Amérique");
             $item2->setPrice(1.95);
+            $item2->setMenu($menu);
             $item2->save();
 
             $menu->addItem($item2);

@@ -192,7 +192,7 @@ class RestaurateurController extends Controller{
         //If no restaurant is specified, display the list
         if ($id == 0) {
             //$commandes = $restaurateur->getCommandes();
-            $commandes = Commande::getBy(array());
+            $commandes = Commande::getByRestaurateur($restaurateur);
             return View::render("restaurateur/gestionCommande.php", array('commandes' => $commandes));
         }
 
